@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jihokim2 <jihokim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:47:30 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/10/28 12:48:38 by jihokim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 02:07:51 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,33 @@ size_t	ft_strlen(char *str)
 	return (len);
 }
 
-char	*ft_strcpy(t_mlx *mlx, char *str)
+char	*ft_strcpy(char *str1, char *str2)
+{
+	ssize_t len;
+	ssize_t i;
+
+	// printf("여기 : %s\n", str1);
+	// printf("여기2 : %s\n", str2);
+	
+	if (*str2 == '\0')
+		return (NULL);
+	len = ft_linelen(str2);
+
+	i = 0;
+	// printf("여기 : %c\n", str1[i]);
+	// printf("여기2 : %c\n", str2[i]);
+	// printf("길이 : %d\n", len);
+	while (i < len)
+	{
+		str1[i] = str2[i];
+		i++;
+	}
+	// printf("여기 : %s\n", str1);
+	// printf("여기2 : %s\n", str2);
+	return (str1);
+}
+
+char	*ft_str_to_mlx(t_mlx *mlx, char *str)		// 두 번째 거 길이를 구해두고 거기에 할당.
 {
 	char	*tmp;
 	size_t	len;
@@ -44,19 +70,20 @@ char	*ft_strcpy(t_mlx *mlx, char *str)
 
 	if (*str == '\0')
 		return (NULL);
-	len = ft_strlen(str);
-	tmp = (char *)ft_calloc(mlx, len + 1, sizeof(char));
+	len = ft_linelen(str);
+	tmp = (char *)ft_calloc(mlx, len, sizeof(char));
 	i = 0;
-	while (i <= len)
+	while (i < len - 1)
 	{
 		tmp[i] = str[i];
 		i++;
 	}
-	tmp[i] = '\0';
+	// tmp[i] = '\0'; // calloc 인데 필요?
+	// printf("%s\n", tmp);
 	return (tmp);
 }
 
-int	ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)					// 모두 같은지 체크하기.
 {
 	int	i;
 

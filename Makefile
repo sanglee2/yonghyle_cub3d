@@ -6,11 +6,11 @@
 #    By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/13 11:43:23 by jrameau           #+#    #+#              #
-#    Updated: 2023/10/08 12:09:04 by sanglee2         ###   ########.fr        #
+#    Updated: 2023/11/23 19:22:13 by sanglee2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = cub3d
+NAME = cub3D
 
 SRCDIR			=	./src/
 SRCNAMES		=	$(shell ls $(SRCDIR) | grep -E ".+\.c")
@@ -25,7 +25,7 @@ MLXDIR 			= 	./mlx
 MLXFLAG			=	-Lmlx -lmlx -framework OpenGL -framework AppKit
 
 CC				=	cc
-CFLAGS			=	-Wall -Werror -Wextra
+CFLAGS			=	-Wall -Werror -Wextra -g -fsanitize=address
 
 all				:	$(BUILDDIR) $(NAME)
 
