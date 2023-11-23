@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:48:52 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/23 09:15:41 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:57:48 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ int		ft_raycast(void *param)
 		// printf("%d\n", mlx->screenWidth);
 	}
 	// printf("hehehe\n");
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->win->img_ptr, 0, 0);
 	return (0);
 }
 

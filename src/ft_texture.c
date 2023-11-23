@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 22:26:03 by sanglee2          #+#    #+#             */
-/*   Updated: 2023/11/23 19:25:46 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:58:44 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,21 @@ void	set_buff(t_ray *ray, t_mlx *mlx, int x)
 	}
 }
 
-// void	user_mlx_pixel_put(t_img *img, int x, int y,int color)
-// {
-// 	char	*dest;
+void	user_mlx_pixel_put(t_mlx *mlx, t_img *img, int x, int y,int color)
+{
+	char	*dest;
+	char	*img_addr;
+	int		bpp;
+	int 	size;
+	int		endian;
 
-// 	dest = (char *) img->pixel;
-// 	dest = dest + img->pixel + (y * img->size + x * (img->bpp / 8));
-// 	*(unsigned int *)dest = color;
-// 	printf("zzzzzzzz\n");
-// }
+
+	img_addr = mlx_get_data_addr(mlx->img.img[0], &bpp, &size, &endian);
+
+	dest = img_addr + (y * img->size + x * (img->bpp / 8));
+	*(unsigned int *)dest = color;
+	// printf("zzzzzzzz\n");
+}
 
 void ft_pixel_put(t_mlx *mlx, int x, int y, int tex_y)
 {
@@ -83,15 +89,15 @@ void ft_pixel_put(t_mlx *mlx, int x, int y, int tex_y)
 		{
 			if (mlx->ray.rdir_x >= 0)
 			{
-				addr = (unsigned int *)mlx->img.addr[3];
-				// color =mlx->img.addr[3][tex_y * TEXHEIGHT + mlx->ray.tex_x]; 
-				// user_mlx_pixel_put(mlx->win->img_ptr ,x, y, color);
+				// addr = (unsigned int *)mlx->img.addr[3];
+				color =mlx->img.addr[3][tex_y * TEXHEIGHT + mlx->ray.tex_x]; 
+				user_mlx_pixel_put(mlx, mlx->win->img_ptr ,x, y, color);
 			}
 			else
 			{
-				addr = (unsigned int *)mlx->img.addr[2];
-				// color =mlx->img.addr[2][tex_y * TEXHEIGHT + mlx->ray.tex_x]; 
-				// user_mlx_pixel_put(mlx->win->img_ptr ,x, y, color);	
+				// addr = (unsigned int *)mlx->img.addr[2];
+				color =mlx->img.addr[2][tex_y * TEXHEIGHT + mlx->ray.tex_x]; 
+				user_mlx_pixel_put(mlx, mlx->win->img_ptr ,x, y, color);	
 				// mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img[2], x, y);
 			}
 		}
@@ -99,23 +105,23 @@ void ft_pixel_put(t_mlx *mlx, int x, int y, int tex_y)
 		{
 			if (mlx->ray.rdir_y >= 0)
 			{
-				// color =mlx->img.addr[1][tex_y * TEXHEIGHT + mlx->ray.tex_x]; 
-				// user_mlx_pixel_put(mlx->win->img_ptr ,x, y, color);	
-				addr = (unsigned int *)mlx->img.addr[1];
+				color =mlx->img.addr[1][tex_y * TEXHEIGHT + mlx->ray.tex_x]; 
+				user_mlx_pixel_put(mlx, mlx->win->img_ptr ,x, y, color);	
+				// addr = (unsigned int *)mlx->img.addr[1];
 				// mlx->win->img_ptr = mlx->img.img[1];	
 			}
 			else
 			{
-				addr = (unsigned int *)mlx->img.addr[0];
-				// color =mlx->img.addr[0][tex_y * TEXHEIGHT + mlx->ray.tex_x]; 
-				// user_mlx_pixel_put(mlx->win->img_ptr ,x, y, color);		
+				// addr = (unsigned int *)mlx->img.addr[0];
+				color =mlx->img.addr[0][tex_y * TEXHEIGHT + mlx->ray.tex_x]; 
+				user_mlx_pixel_put(mlx, mlx->win->img_ptr ,x, y, color);		
 				// mlx->win->img_ptr = mlx->img.img[0];	
 			}
 
 		}
 	// mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->win->img_ptr, x, y);
-	color = *(addr + tex_y * TEXHEIGHT + mlx->ray.tex_x);
-	mlx_pixel_put(mlx->mlx, mlx->win, x, y, color);	
+	// color = *(addr + tex_y * TEXHEIGHT + mlx->ray.tex_x);
+	// mlx_pixel_put(mlx->mlx, mlx->win, x, y, color);	
 }
 
 

@@ -109,7 +109,7 @@ typedef struct s_img
 {
 	void	*img[4];
 	char	*addr[4];
-	// char	*pixel;
+	char	*pixel;
 	
 	char	**buffer;
 	int		width;
@@ -119,10 +119,14 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
-// typedef struct s_win
-// {
-// 	t_img	*img_ptr;
-// }	t_win;
+
+
+
+
+typedef struct s_win
+{
+	t_img	*img_ptr;
+}	t_win;
 
 
 typedef struct s_mlx
@@ -134,7 +138,7 @@ typedef struct s_mlx
 	// int		texture[TEXHEIGHT][TEXWIDTH];
 	int		linenum;
 	void	*mlx;
-	void	*win;
+	t_win	*win;
 	void	*mini;
 	void	*image;
 	char	**map;
