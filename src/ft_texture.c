@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 22:26:03 by sanglee2          #+#    #+#             */
-/*   Updated: 2023/11/25 02:52:12 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:13:38 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	ft_get_wallX(t_ray *ray, t_mlx *mlx)								// vline 그리는 거 - 아니면 벽 그리고 나서 wall 세팅하는 거 다시 하는 것 일지도.
 {
 	double wallX;
-	
+
+
 	if (ray->orthogonal == 0)												// X 벽면에 맞았는지 체크
 		wallX = ray->pos_y + (ray->plane_hitDist * ray->rdir_y); 			// 여기기서  플플레레이 위위치  2번  저저장장하하는가
 	else
@@ -40,6 +41,7 @@ void	ft_get_wallX(t_ray *ray, t_mlx *mlx)								// vline 그리는 거 - 아니
 	
 	ray->ratio = 1.0 * TEXHEIGHT / ray->wallheight;												// 멀리 있을 때 짜글이. 1픽셀 -> 텍스처에서 1픽셀! 인지 뭐할지.
 	ray->texpos = (ray->wallstart - mlx->screenHeight / 2 + ray->wallheight / 2 ) * ray->ratio; // texpos의 존재이유.
+	// ray->tex_y = (double) ((ray->wallstart - mlx->screenHeight / 2 + ray->wallheight / 2) * TEXHEIGHT / ray->wallheight);
 }
 
 void	user_mlx_pixel_put(t_img_data *img, int x, int y, int color)
@@ -56,23 +58,24 @@ void	ft_get_walltexture(t_ray *ray , t_mlx *mlx, int x)
 	int	y;
 	int j;
 	int color;
-	j = 0;
+	j = 0;				// 지금 이거 확인 한 거.
 	y = ray->wallstart;
-	// char *dest;
+	char *dest;
 
 	while(y < ray->wallend)
 	{
 
-		ray->tex_y = j * TEXHEIGHT / ray->wallheight;				// 희한 한 것 발견. 어디서 부터 묶고 나누는지도 중요. 중요 관건!
 	
-		if (ray->tex_x < 0)
-			ray->tex_x = 0;
-		else if (ray->tex_x >= TEXWIDTH)
+		// if (ray->tex_x < 0)
+		// 	ray->tex_x = 0;
+		if (ray->tex_x >= TEXWIDTH)
 			ray->tex_x = TEXWIDTH - 1;
 		// if (ray->tex_y < 0)
 		// 	ray->tex_y = 0;	
-		// else if (ray->tex_y >= TEXHEIGHT)
-		// 	ray->tex_y = TEXHEIGHT - 1;
+		if (ray->tex_y >= TEXHEIGHT)
+			ray->tex_y = TEXHEIGHT - 1;
+		// ray->tex_y += ((float)TEXHEIGHT / ray->wallheight);				// 희한 한 것 발견. 어디서 부터 묶고 나누는지도 중요. 중요 관건!
+		ray->tex_y = (int)ray->texpos & (TEXHEIGHT - 1);
 		if (ray->orthogonal == 0)
 		{
 			if (ray->rdir_x > 0)
@@ -102,21 +105,23 @@ void	ft_get_walltexture(t_ray *ray , t_mlx *mlx, int x)
 		{
 			if (ray->rdir_y > 0)
 			{
+				dest = mlx->img_data[SO].addr + (ray->tex_y * mlx->img_data[SO].length + ray->tex_x * (mlx->img_data[SO].bpp / 8));
+				color = *(unsigned int *)dest;
 				// color = *((unsigned int *) mlx->img_data[SO].addr + ray->tex_y * TEXWIDTH + ray->tex_x);
-				color = *(int *) (mlx->img_data[EA].addr + ray->tex_y * TEXWIDTH + ray->tex_x);		
+				// color = *(int *) (mlx->img_data[EA].addr + ray->tex_y * TEXWIDTH + ray->tex_x);		
 				// color = *(int *) (mlx->img_data[SO].addr + (y * (int)ray->ratio *  mlx->img_data[SO].length + ray->tex_x * (mlx->img_data[SO].bpp / 8)));	//addr - char *라는 거 기억 기억해! addr => color로 바꾸는 게 핵심 -mlx 라이브러리 유심히 보기
 				// user_mlx_pixel_put(&mlx->img, x, y, color);
 			}
 			else
 			{
-				// color = *((unsigned int *) mlx->img_data[NO].addr + ray->tex_y * TEXWIDTH + ray->tex_x);
-				color = *(int *) (mlx->img_data[EA].addr + ray->tex_y * TEXWIDTH + ray->tex_x);
+				color = *((unsigned int *) mlx->img_data[NO].addr + ray->tex_y * TEXWIDTH + ray->tex_x);
+				// color = *(int *) (mlx->img_data[EA].addr + ray->tex_y * TEXWIDTH + ray->tex_x);
 				// color = *(int *) (mlx->img_data[NO].addr + (y * (int)ray->ratio *  mlx->img_data[NO].length + ray->tex_x * (mlx->img_data[NO].bpp / 8)));	//addr - char *라는 거 기억 기억해! addr => color로 바꾸는 게 핵심 -mlx 라이브러리 유심히 보기
 				// user_mlx_pixel_put(&mlx->img, x, y, color);
 			}
 		}
 		user_mlx_pixel_put(&mlx->img, x, y, color);	
-		// ray->texpos = ray->texpos + ray->ratio;
+		ray->texpos = ray->texpos + ray->ratio;
 		// ray->tex_y = ray->tex_y + ((double)TEXHEIGHT / ray->wallheight);
 		y++;
 		j++;

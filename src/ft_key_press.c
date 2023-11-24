@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:52:52 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/24 14:32:46 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:16:35 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ void	ft_go_backward(t_mlx *mlx, t_ray *ray)
 
 void	ft_go_left(t_mlx *mlx, t_ray *ray)
 {
-	if (mlx->map[(int)(ray->pos_y)][(int)(ray->pos_x - ray->dir_y * MOVE_RATIO * LIMITS)] == '0') // 회전변환 양수 90인 걸 생각.
-		ray->pos_x = ray->pos_x - ray->dir_y * MOVE_RATIO;
-	if (mlx->map[(int)(ray->pos_y + ray->dir_x * MOVE_RATIO * LIMITS)][(int)(ray->pos_x)] == '0')
-		ray->pos_y = ray->pos_y + ray->dir_x * MOVE_RATIO; // 직진을 해서 앞으로 나아갈 수 있음.
+	if (mlx->map[(int)(ray->pos_y)][(int)(ray->pos_x + ray->dir_y * MOVE_RATIO * LIMITS)] == '0') // 회전변환 양수 90인 걸 생각.
+		ray->pos_x = ray->pos_x + ray->dir_y * MOVE_RATIO;
+	if (mlx->map[(int)(ray->pos_y - ray->dir_x * MOVE_RATIO * LIMITS)][(int)(ray->pos_x)] == '0')
+		ray->pos_y = ray->pos_y - ray->dir_x * MOVE_RATIO; // 직진을 해서 앞으로 나아갈 수 있음.
 }
 
 void	ft_go_right(t_mlx *mlx, t_ray *ray)
 {
-	if (mlx->map[(int)(ray->pos_y)][(int)(ray->pos_x + ray->dir_y * MOVE_RATIO * LIMITS)] == '0')
-		ray->pos_x = ray->pos_x + ray->dir_y * MOVE_RATIO;
-	if (mlx->map[(int)(ray->pos_y - ray->dir_x * MOVE_RATIO * LIMITS)][(int)(ray->pos_x)] == '0')
-		ray->pos_y = ray->pos_y - ray->dir_x * MOVE_RATIO;
+	if (mlx->map[(int)(ray->pos_y)][(int)(ray->pos_x - ray->dir_y * MOVE_RATIO * LIMITS)] == '0')
+		ray->pos_x = ray->pos_x - ray->dir_y * MOVE_RATIO;
+	if (mlx->map[(int)(ray->pos_y + ray->dir_x * MOVE_RATIO * LIMITS)][(int)(ray->pos_x)] == '0')
+		ray->pos_y = ray->pos_y + ray->dir_x * MOVE_RATIO;
 }
 
 void	ft_move(int keycode, t_mlx *mlx)

@@ -84,7 +84,7 @@ typedef struct  s_ray			// 광선과 관련한 필요한 모든 것.
 	int		orthogonal;			// 직선과 만나는 벽면 -> 나중에 #define해서 대입하기.
 	double	plane_hitDist;
 	int		tex_x;
-	int		tex_y;
+	int 	tex_y;
 	double	radius;
 	double	cam_plane_len;
 	int		wallheight;			// 지우거나, 대처할 거라고 생각해야 하는 것들
