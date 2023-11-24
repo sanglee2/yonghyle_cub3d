@@ -258,11 +258,10 @@ void	ft_perform_dda(t_mlx *mlx, t_ray *ray);
 void	ft_calcul_distance(t_ray *ray);
 
 /*		ft_texture.c			*/
-void	mapping_buff(t_ray *ray, t_mlx *mlx);
-void	set_buff(t_ray *ray, t_mlx *mlx, int x);
-void	ft_get_texture_color(t_ray *ray, t_img_data *img_data, int x, int y);
-void	user_mlx_pixel_put(t_img_data *img_data, int x, int y, int color);
-
+void	ft_get_wallX(t_ray *ray, t_mlx *mlx);
+void	ft_get_walltexture(t_ray *ray, t_mlx *mlx, int x);
+// void	ft_get_texture_color(t_ray *ray, t_img_data *img_data, int x, int y);
+void	user_mlx_pixel_put(t_img_data *img, int x, int y, int color);
 
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 22:26:03 by sanglee2          #+#    #+#             */
-/*   Updated: 2023/11/24 15:22:12 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/24 19:54:12 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	mapping_buff(t_ray *ray, t_mlx *mlx)								// vline 그리는 거 - 아니면 벽 그리고 나서 wall 세팅하는 거 다시 하는 것 일지도.
+void	ft_get_wallX(t_ray *ray, t_mlx *mlx)								// vline 그리는 거 - 아니면 벽 그리고 나서 wall 세팅하는 거 다시 하는 것 일지도.
 {
 	double wallX;
 	
@@ -29,7 +29,7 @@ void	mapping_buff(t_ray *ray, t_mlx *mlx)								// vline 그리는 거 - 아니
 		
 	ray->tex_x = (int) (wallX * (double)TEXWIDTH);				             // tex_x 구함.
 
-	ray->wallheight = (int) (mlx->screenHeight / ray->plane_hitDist);		// screenHeight 소속이 어디면 더 깔끔한지 소개, 생각해 볼 것.
+	ray->wallheight = (int) (mlx->screenHeight / ray->plane_hitDist);		//  함수    진입  전   구구조조체체에  넣넣어어주주기  -> 주주석석으으로  해해야  할  일  깔깔끔끔하하게  작작성성.
 	ray->wallstart =  mlx->screenHeight / 2 - ray->wallheight / 2;
 	ray->wallend = mlx->screenHeight / 2 + ray->wallheight / 2;
 
@@ -46,12 +46,12 @@ void	user_mlx_pixel_put(t_img_data *img, int x, int y, int color)
 {
 	char	*dest;
 
-	dest = img->addr + (img->length * y + x * (img->bpp / 8));
+	dest = img->addr + (img->length * y + x * img->bpp / 8);
 	*(unsigned int *)dest = color;
 }
 
 //  잘해서 고칠 수 있다! - 42docs mlx_pixel_put 먼저!! 고고고!
-void	set_buff(t_ray *ray , t_mlx *mlx, int x)
+void	ft_get_walltexture(t_ray *ray , t_mlx *mlx, int x)
 {
 	int	y;
 	int color;
@@ -63,12 +63,14 @@ void	set_buff(t_ray *ray , t_mlx *mlx, int x)
 		{
 			if (ray->rdir_x >= 0)
 			{
-				color = mlx->img_data[EA].addr[y * (int)ray->ratio + ray->tex_x];	//addr - char *라는 거 기억 기억해! addr => color로 바꾸는 게 핵심 -mlx 라이브러리 유심히 보기
+				color = *(int *) (mlx->img_data[EA].addr + (y * (int)ray->ratio *  mlx->img_data[EA].length + ray->tex_x * (mlx->img_data[EA].bpp / 8)));	//addr - char *라는 거 기억 기억해! addr => color로 바꾸는 게 핵심 -mlx 라이브러리 유심히 보기
+				// color = mlx->img_data[EA].addr[0];
 				user_mlx_pixel_put(&mlx->img, x, y, color);
+
 			}
 			else
 			{
-				color = mlx->img_data[WE].addr[y * (int)ray->ratio + ray->tex_x];
+				color = *(int *) (mlx->img_data[WE].addr + (y * (int)ray->ratio *  mlx->img_data[WE].length + ray->tex_x * (mlx->img_data[WE].bpp / 8)));	//addr - char *라는 거 기억 기억해! addr => color로 바꾸는 게 핵심 -mlx 라이브러리 유심히 보기
 				user_mlx_pixel_put(&mlx->img, x, y, color);
 			}
 				
@@ -77,12 +79,12 @@ void	set_buff(t_ray *ray , t_mlx *mlx, int x)
 		{
 			if (ray->rdir_y >= 0)
 			{
-				color = mlx->img_data[SO].addr[y * (int)ray->ratio + ray->tex_x];
+				color = *(int *) (mlx->img_data[SO].addr + (y * (int)ray->ratio *  mlx->img_data[SO].length + ray->tex_x * (mlx->img_data[SO].bpp / 8)));	//addr - char *라는 거 기억 기억해! addr => color로 바꾸는 게 핵심 -mlx 라이브러리 유심히 보기
 				user_mlx_pixel_put(&mlx->img, x, y, color);
 			}
 			else
 			{
-				color = mlx->img_data[NO].addr[y * (int)ray->ratio + ray->tex_x];
+				color = *(int *) (mlx->img_data[NO].addr + (y * (int)ray->ratio *  mlx->img_data[NO].length + ray->tex_x * (mlx->img_data[NO].bpp / 8)));	//addr - char *라는 거 기억 기억해! addr => color로 바꾸는 게 핵심 -mlx 라이브러리 유심히 보기
 				user_mlx_pixel_put(&mlx->img, x, y, color);
 			}
 		}

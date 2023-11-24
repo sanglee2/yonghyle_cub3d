@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:48:52 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/24 16:39:49 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:41:09 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,8 @@ int		ft_raycast(void *param)
 		ft_draw_floor(mlx, x, wallend, mlx->data.intfloor);	
 
 		
-		mapping_buff(&mlx->ray, mlx);
-		set_buff(&mlx->ray, mlx, x);
+		ft_get_wallX(&mlx->ray, mlx);
+		ft_get_walltexture(&mlx->ray, mlx, x);
 		x++;
 	}
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);		// image_data의 배열. 배열을 넣을것인가?!
