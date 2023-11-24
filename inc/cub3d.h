@@ -33,10 +33,10 @@
 # define TEXHEIGHT		64	
 
 /* texture에 필요한 방향 */
-# define NORTH			0
-# define SOUTH			1
-# define WEST			2
-# define EAST			3
+# define NO			0
+# define SO			1
+# define WE			2
+# define EA			3
 
 
 
@@ -105,41 +105,43 @@ typedef struct	s_3d			// 3d 관련된 부분 구조체.
 	double	bottom;
 }	t_3d;
 
-typedef struct s_img
+// typedef struct s_img
+// {
+// 	void	*img[4];
+// 	char	*addr[4];
+// 	int		width;
+// 	int		height;
+// 	int		bpp;
+// 	int		size;
+// 	int		endian;
+// 	char	*pixel;		// 이 네놈 왜 필요한지 모르겠다.	
+// 	char	**buffer;	
+// }	t_img;
+
+
+typedef struct s_img_data	// img 와 addr 뿐 아니라 전체를 구조체 배열을 갖고 있어야 한다.
 {
-	void	*img[4];
-	char	*addr[4];
-	char	*pixel;
-	
-	char	**buffer;
-	int		width;
-	int		height;
+	void	*img;
+	char	*addr;
 	int		bpp;
-	int		size;
+	int		length;
 	int		endian;
-}	t_img;
-
-
-
-
-
-typedef struct s_win
-{
-	t_img	*img_ptr;
-}	t_win;
+	int		width;			// texwidth -> #define 안 해도 됨.
+	int		height;
+} t_img_data;
 
 
 typedef struct s_mlx
 {
+	void	*mlx;
+	t_img_data	img_data[4];	// 포인터 로써도 다재다능하게 쓰일 수 있나.	
+	t_img_data	img;
 	t_data	data;
 	t_ray	ray;
 	t_3d	ddd;				// 3d 이놈 뭔데?!	
-	t_img	img;
 	// int		texture[TEXHEIGHT][TEXWIDTH];
 	int		linenum;
-	void	*mlx;
-	t_win	*win;
-	void	*mini;
+	void	*win;
 	void	*image;
 	char	**map;
 	char	**tmp;
@@ -239,9 +241,8 @@ void	ft_draw_ceiling(t_mlx *mlx, int x, int wallstart, int color);
 void	ft_draw_floor(t_mlx *mlx, int x, int wallend, int color);
 
 /*		ft_img.c		*/
-// void	ft_mlx_img(t_mlx *mlx);
-void	ft_mlx_xpm_file_to_image(t_mlx *mlx, int width, int height);
-void	ft_mlx_get_data_addr(t_mlx *mlx, int bpp, int size, int endian);
+void	ft_init_texture(t_mlx *mlx);
+void	ft_load_texture(t_mlx *mlx);
 
 /*		ft_error.c		*/
 void	ft_free_map(t_mlx *mlx);
@@ -259,6 +260,8 @@ void	ft_calcul_distance(t_ray *ray);
 /*		ft_texture.c			*/
 void	mapping_buff(t_ray *ray, t_mlx *mlx);
 void	set_buff(t_ray *ray, t_mlx *mlx, int x);
+void	ft_get_texture_color(t_ray *ray, t_img_data *img_data, int x, int y);
+void	user_mlx_pixel_put(t_img_data *img_data, int x, int y, int color);
 
 
 

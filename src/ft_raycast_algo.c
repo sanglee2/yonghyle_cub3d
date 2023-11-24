@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:05:14 by sanglee2          #+#    #+#             */
-/*   Updated: 2023/11/21 11:55:14 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/23 21:03:05 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,6 @@ void	ft_set_coordinate(t_ray *ray)
 
 	ray->mapX = (int)ray->pos_x;
 	ray->mapY = (int)ray->pos_y;
-
-	// printf("rayx : %d\n", ray->mapX);	// 플레이어의 위치는 정확히 맞게 찾음.
-	// printf("rayy : %d\n", ray->mapY);	
-
-	// 초기 sideX, sideY 값 선언.				// 구조체 내 변수로 선언.
-
-	// 격자 1칸(x면, y면)마다 변하는 직선의 거리 선언. 
-	// 광선의 이동거리 구하는 데 사용.
-
-	// if (ray->rdir_x == 0)						// 잘못되었던 부분! - 광선의 방향벡터! 광선의 방향벡터! -  광광선선의   방방향향벡벡터  
-	// {
-	// 	ray->varDistX = 1;
-	// 	ray->varDistY = 0;
-	// }
-	// if (ray->rdir_y == 0)
-	// {
-	// 	ray->varDistX = 0;
-	// 	ray->varDistY = 1;
-	// }
 
 	if (ray->rdir_x == 0) 
 		ray->varDistY = 0; 
@@ -65,10 +46,6 @@ void	ft_set_coordinate(t_ray *ray)
 			ray->varDistX = fabs(1 / ray->rdir_x);
 		
 	}
-	// ray->varDistX = fabs(1 / ray->rdir_x);		// math.h
-	// ray->varDistY = fabs(1 / ray->rdir_y);
-
-	// DDA 건너 뛸 방향에 대해서 선언.
 }
 
 void	ft_set_dda(t_ray *ray)                                            // 각 방향마다 이동할 거리 모두 구하기.	
@@ -98,12 +75,9 @@ void	ft_set_dda(t_ray *ray)                                            // 각 �
 
 void	ft_perform_dda(t_mlx *mlx, t_ray *ray)
 {
-	// 맞았는지, 안 맞았는지 체크하는 변수 선언.
-	// 어떤 벽면으로 맞았는지 체크하는 변수 선언.
 	int hit;
 
 	hit = 0;
-	// printf("여기 : %d, 저기 : %d\n", ray->mapX, ray->mapY);	// 제대로 플레이 위치, 맵에 반영됨. - 13, 26
 	while (hit == 0)
 	{
 		if (ray->initDistX < ray->initDistY)
@@ -118,11 +92,8 @@ void	ft_perform_dda(t_mlx *mlx, t_ray *ray)
 			ray->mapY = ray->mapY + ray->stepY;
 			ray->orthogonal = 1;						
 		}
-		// printf("%d, %d\n", ray->mapX, ray->mapY);
-		// printf("결과 : %d\n", mlx->map[10][10]);
 		if (mlx->map[ray->mapY][ray->mapX] == '1')						// map free 안하고 갖고 있어야 해.
 		{
-			// printf("%d, %d\n", ray->mapX, ray->mapY);					// 광선이 맞았을 때 부분도. (9,27) , (10,28) 등 다양. 다양하다.
 			hit = 1;
 		}
 	}
