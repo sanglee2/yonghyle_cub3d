@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 22:26:03 by sanglee2          #+#    #+#             */
-/*   Updated: 2023/11/25 02:07:01 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/25 02:52:12 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	ft_get_wallX(t_ray *ray, t_mlx *mlx)								// vline 그리는 거 - 아니
 	if (ray->wallend >= mlx->screenHeight)
 		ray->wallend = mlx->screenHeight;
 	
-	// ray->ratio = 1.0 * TEXHEIGHT / ray->wallheight;												// 멀리 있을 때 짜글이. 1픽셀 -> 텍스처에서 1픽셀! 인지 뭐할지.
-	// ray->texpos = (ray->wallstart - mlx->screenHeight / 2 + ray->wallheight / 2 ) * ray->ratio; // texpos의 존재이유.
+	ray->ratio = 1.0 * TEXHEIGHT / ray->wallheight;												// 멀리 있을 때 짜글이. 1픽셀 -> 텍스처에서 1픽셀! 인지 뭐할지.
+	ray->texpos = (ray->wallstart - mlx->screenHeight / 2 + ray->wallheight / 2 ) * ray->ratio; // texpos의 존재이유.
 }
 
 void	user_mlx_pixel_put(t_img_data *img, int x, int y, int color)
@@ -58,24 +58,29 @@ void	ft_get_walltexture(t_ray *ray , t_mlx *mlx, int x)
 	int color;
 	j = 0;
 	y = ray->wallstart;
-	char *dest;
+	// char *dest;
 
 	while(y < ray->wallend)
 	{
-		
-		ray->tex_y = j * TEXHEIGHT / ray->wallheight;
-		if (ray->tex_y >= TEXHEIGHT)
-			ray->tex_y = TEXHEIGHT - 1;
-		if (ray->dir_x >= TEXWIDTH)
-			ray->dir_x = TEXWIDTH - 1;
+
+		ray->tex_y = j * TEXHEIGHT / ray->wallheight;				// 희한 한 것 발견. 어디서 부터 묶고 나누는지도 중요. 중요 관건!
+	
+		if (ray->tex_x < 0)
+			ray->tex_x = 0;
+		else if (ray->tex_x >= TEXWIDTH)
+			ray->tex_x = TEXWIDTH - 1;
+		// if (ray->tex_y < 0)
+		// 	ray->tex_y = 0;	
+		// else if (ray->tex_y >= TEXHEIGHT)
+		// 	ray->tex_y = TEXHEIGHT - 1;
 		if (ray->orthogonal == 0)
 		{
 			if (ray->rdir_x > 0)
 			{
 				// pos_x, pos_y를 넘겨주면서 작업 시작.
-				dest = mlx->img_data[EA].addr + (ray->tex_y * mlx->img_data[EA].length + ray->tex_x * (mlx->img_data[EA].bpp / 8));
-				color = *(unsigned int *)dest;
-				// color = *((unsigned int *) mlx->img_data[EA].addr + ray->tex_y * TEXWIDTH + ray->tex_x);
+				// dest = mlx->img_data[EA].addr + (ray->tex_y * mlx->img_data[EA].length + ray->tex_x * (mlx->img_data[EA].bpp / 8));
+				// color = *(unsigned int *)dest;
+				color = *((unsigned int *) mlx->img_data[EA].addr + ray->tex_y * TEXWIDTH + ray->tex_x);
 				// color = *(int *) (mlx->img_data[EA].addr + ray->tex_y * TEXWIDTH + ray->tex_x);	
 				// color = *(int *) (mlx->img_data[EA].addr + (y * (int)ray->ratio *  mlx->img_data[EA].length + ray->tex_x * (mlx->img_data[EA].bpp / 8)));	//addr - char *라는 거 기억 기억해! addr => color로 바꾸는 게 핵심 -mlx 라이브러리 유심히 보기
 				// color = mlx->img_data[EA].addr[0];
@@ -84,9 +89,9 @@ void	ft_get_walltexture(t_ray *ray , t_mlx *mlx, int x)
 			}
 			else
 			{
-				dest = mlx->img_data[WE].addr + (ray->tex_y * mlx->img_data[WE].length + ray->tex_x * (mlx->img_data[WE].bpp / 8));
-				color = *(unsigned int *)dest;
-				// color = *((unsigned int *) mlx->img_data[WE].addr + ray->tex_y * TEXWIDTH + ray->tex_x);
+				// dest = mlx->img_data[WE].addr + (ray->tex_y * mlx->img_data[WE].length + ray->tex_x * (mlx->img_data[WE].bpp / 8));
+				// color = *(unsigned int *)dest;
+				color = *((unsigned int *) mlx->img_data[WE].addr + ray->tex_y * TEXWIDTH + ray->tex_x);
 				// color = *(int *) (mlx->img_data[EA].addr + ray->tex_y * TEXWIDTH + ray->tex_x);	
 				// color = *(int *) (mlx->img_data[WE].addr + (y * (int)ray->ratio *  mlx->img_data[WE].length + ray->tex_x * (mlx->img_data[WE].bpp / 8)));	//addr - char *라는 거 기억 기억해! addr => color로 바꾸는 게 핵심 -mlx 라이브러리 유심히 보기
 				// user_mlx_pixel_put(&mlx->img, x, y, color);
@@ -112,6 +117,7 @@ void	ft_get_walltexture(t_ray *ray , t_mlx *mlx, int x)
 		}
 		user_mlx_pixel_put(&mlx->img, x, y, color);	
 		// ray->texpos = ray->texpos + ray->ratio;
+		// ray->tex_y = ray->tex_y + ((double)TEXHEIGHT / ray->wallheight);
 		y++;
 		j++;
 	}
