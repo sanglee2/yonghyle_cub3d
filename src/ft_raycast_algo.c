@@ -6,19 +6,19 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:05:14 by sanglee2          #+#    #+#             */
-/*   Updated: 2023/11/23 21:03:05 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/25 13:09:32 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	ft_get_plane_vector(t_mlx *mlx)
-{
-	mlx->ray.plane_x = -1 * mlx->ray.dir_y;
-	mlx->ray.plane_y = -1 * mlx->ray.dir_x;
-	// double plane_x = 0;
-	// double plane_y = 1;
-}
+// void	ft_get_plane_vector(t_mlx *mlx)
+// {
+// 	mlx->ray.plane_x = -1 * mlx->ray.dir_y;
+// 	mlx->ray.plane_y = -1 * mlx->ray.dir_x;
+// 	// double plane_x = 0;
+// 	// double plane_y = 1;
+// }
 
 void	ft_set_coordinate(t_ray *ray)
 {
@@ -26,26 +26,19 @@ void	ft_set_coordinate(t_ray *ray)
 	ray->mapX = (int)ray->pos_x;
 	ray->mapY = (int)ray->pos_y;
 
-	if (ray->rdir_x == 0) 
-		ray->varDistY = 0; 
-	else 
-	{
-		if (ray->rdir_y == 0)
-			ray->varDistY = 1;
-		else 
+	// if (ray->rdir_x == 0) 
+	// 	ray->varDistY = 0; 
+		// if (ray->rdir_y == 0)
+		// 	ray->varDistY = 1;
+		// else 
 			ray->varDistY = fabs(1 / ray->rdir_y);
-	}
 
-	if (ray->rdir_y == 0)
-		ray->varDistX = 0;
-	else
-	{
-		if (ray->rdir_x == 0)
-			ray->varDistX = 1;
-		else
+	// if (ray->rdir_y == 0)
+	// 	ray->varDistX = 0;
+		// if (ray->rdir_x == 0)
+		// 	ray->varDistX = 1;
+		// else
 			ray->varDistX = fabs(1 / ray->rdir_x);
-		
-	}
 }
 
 void	ft_set_dda(t_ray *ray)                                            // 각 방향마다 이동할 거리 모두 구하기.	
@@ -103,16 +96,32 @@ void	ft_calcul_distance(t_ray *ray)
 {
 	if (ray->orthogonal == 1)	// y벽면에 맞았다는 뜻
 	{
-		if (ray->stepY == 1)
-			ray->plane_hitDist = (ray->mapY - ray->pos_y) / ray->rdir_y;
-		else
-			ray->plane_hitDist = (1 + ray->mapY - ray->pos_y) / ray->rdir_y;
+
+		ray->plane_hitDist = (ray->mapY - ray->pos_y + (1 - ray->stepY) / 2) / ray->rdir_y;
+		// if (ray->stepY == 1)
+		// {
+		// 	ray->plane_hitDist = (ray->mapY - ray->pos_y) / ray->rdir_y;
+		// 	// printf("111111\n");
+		// }
+		// else
+		// {
+		// 	ray->plane_hitDist = (1.0 + ray->mapY - ray->pos_y) / ray->rdir_y;
+		// 	// printf("22222222\n");
+		// }
 	}
 	else
 	{
-		if (ray->stepX == 1)
-			ray->plane_hitDist = (ray->mapX - ray->pos_x) / ray->rdir_x;		// 광선 방향향벡벡터터의  x 성분만큼 나눠줘.
-		else
-			ray->plane_hitDist = (1 + ray->mapX - ray->pos_x) / ray->rdir_x;
+		ray->plane_hitDist = (ray->mapX - ray->pos_x + (1 - ray->stepX) / 2) / ray->rdir_x;
+		// if (ray->stepX == 1)
+		// {
+		// 	ray->plane_hitDist = (ray->mapX - ray->pos_x) / ray->rdir_x;		// 광선 방향향벡벡터터의  x 성분만큼 나눠줘.
+		// 	// printf("33333\n");
+		// }
+		// else
+		// {
+		// 	ray->plane_hitDist = (1.0 + ray->mapX - ray->pos_x) / ray->rdir_x;
+		// 	// printf("4444444\n");
+		// }
 	}
+
 }

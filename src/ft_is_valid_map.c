@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:54:51 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/24 16:37:34 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/25 20:09:24 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_get_dir_vector(t_mlx *mlx, char c) // 방향벡터 초기화 -> 바라�
 		mlx->ray.dir_x = 1;
 		mlx->ray.plane_y = 0.66;
 	}
+	// printf("%lf, %lf, %lf, %lf\n", mlx->ray.dir_x, mlx->ray.dir_y, mlx->ray.plane_x, mlx->ray.plane_y);
 }
 
 void	ft_find_player(t_mlx *mlx, int player, int x, int y)

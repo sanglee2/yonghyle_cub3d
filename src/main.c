@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:48:52 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/25 01:34:11 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/25 23:13:33 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	ft_init(t_mlx *mlx)
 	window_init(mlx);
 
 	// mlx->ray.radius = GRID_LEN / 2;
-	mlx->ray.pos_x = mlx->data.x;
-	mlx->ray.pos_y = mlx->data.y;
+	mlx->ray.pos_x = mlx->data.x + 0.5;
+	// mlx->ray.pos_x = mlx->data.x + 0.5;
+	mlx->ray.pos_y = mlx->data.y + 0.5;
+	// mlx->ray.pos_y = mlx->data.y + 0.5;
 	// mlx->ray.cam_plane_len = GRID_LEN;				
 	// mlx->ddd.ratio = mlx->screenWidth / GRID_LEN;   
 	// mlx->ddd.diagonal = sqrt(mlx->screenWidth * mlx->screenWidth + 
@@ -95,14 +97,14 @@ int		ft_raycast(void *param)
 		ft_calcul_distance(&mlx->ray);					
 
 		wallheight = (int)(mlx->screenHeight / mlx->ray.plane_hitDist);
-		wallstart = (mlx->screenHeight / 2) - (wallheight / 2);
-		wallend = (mlx->screenHeight / 2) + (wallheight / 2);
+		wallstart = (int)((mlx->screenHeight / 2) - (wallheight / 2));
+		wallend = (int) ((mlx->screenHeight / 2) + (wallheight / 2));
 
+		// printf("%lf\n",(mlx->screenHeight / mlx->ray.plane_hitDist));
 
 		ft_draw_ceiling(mlx, x, wallstart, mlx->data.intceiling);
 		// ft_draw_wall(mlx, x, wallstart, wallend);
 		ft_draw_floor(mlx, x, wallend, mlx->data.intfloor);	
-
 		
 		ft_get_wallX(&mlx->ray, mlx);
 		ft_get_walltexture(&mlx->ray, mlx, x);
@@ -113,8 +115,14 @@ int		ft_raycast(void *param)
 	return (0);
 }
 
+// void check(void)
+// {
+// 	system("leaks ./cub3D");
+// }
+
 int	main(int ac, char **av)
 {
+	// atexit(check);
 	t_mlx	mlx;	
 
 	ft_bzero(&mlx, sizeof(mlx));	
@@ -124,6 +132,7 @@ int	main(int ac, char **av)
 	mlx_hook(mlx.win, 2, 0, &ft_key_press, &mlx); 
 	mlx_hook(mlx.win, 17, 0, &ft_end_game, &mlx); 
 	mlx_loop_hook(mlx.mlx, &ft_raycast, &mlx);	
-	mlx_loop(mlx.mlx);							
+	mlx_loop(mlx.mlx);
+	// system("leaks ./cub3D");							
 	return (0);
 }

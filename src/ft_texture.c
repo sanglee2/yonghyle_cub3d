@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 22:26:03 by sanglee2          #+#    #+#             */
-/*   Updated: 2023/11/25 04:13:38 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/25 16:31:31 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	ft_get_walltexture(t_ray *ray , t_mlx *mlx, int x)
 	int color;
 	j = 0;				// 지금 이거 확인 한 거.
 	y = ray->wallstart;
-	char *dest;
+	// char *dest;
+	
 
 	while(y < ray->wallend)
 	{
@@ -105,9 +106,9 @@ void	ft_get_walltexture(t_ray *ray , t_mlx *mlx, int x)
 		{
 			if (ray->rdir_y > 0)
 			{
-				dest = mlx->img_data[SO].addr + (ray->tex_y * mlx->img_data[SO].length + ray->tex_x * (mlx->img_data[SO].bpp / 8));
-				color = *(unsigned int *)dest;
-				// color = *((unsigned int *) mlx->img_data[SO].addr + ray->tex_y * TEXWIDTH + ray->tex_x);
+				// dest = mlx->img_data[SO].addr + (ray->tex_y * mlx->img_data[SO].length + ray->tex_x * (mlx->img_data[SO].bpp / 8));
+				// color = *(unsigned int *)dest;
+				color = *((unsigned int *) mlx->img_data[SO].addr + ray->tex_y * TEXWIDTH + ray->tex_x);
 				// color = *(int *) (mlx->img_data[EA].addr + ray->tex_y * TEXWIDTH + ray->tex_x);		
 				// color = *(int *) (mlx->img_data[SO].addr + (y * (int)ray->ratio *  mlx->img_data[SO].length + ray->tex_x * (mlx->img_data[SO].bpp / 8)));	//addr - char *라는 거 기억 기억해! addr => color로 바꾸는 게 핵심 -mlx 라이브러리 유심히 보기
 				// user_mlx_pixel_put(&mlx->img, x, y, color);
