@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_draw_texture.c                                  :+:      :+:    :+:   */
+/*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/28 13:12:55 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 16:33:02 by sanglee2         ###   ########.fr       */
+/*   Created: 2023/10/28 12:47:30 by jihokim2          #+#    #+#             */
+/*   Updated: 2023/11/26 16:56:54 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	ft_draw_ceiling(t_mlx *mlx, int x, int wallstart, int color)
+char	*ft_strcpy(char *str1, char *str2)
 {
-	int	y;
+	ssize_t	len;
+	ssize_t	i;
 
-	y = -1;
-	while (++y < wallstart)
-		user_mlx_pixel_put (&mlx->img, x, y, color);
-}
-
-void	ft_draw_floor(t_mlx *mlx, int x, int wallend, int color)
-{
-	int	y;
-
-	y = wallend - 1;
-	while (++y < mlx->screenHeight)
-		user_mlx_pixel_put(&mlx->img, x, y, color);
+	if (*str2 == '\0')
+		return (NULL);
+	len = ft_linelen(str2);
+	i = 0;
+	while (i < len)
+	{
+		str1[i] = str2[i];
+		i++;
+	}
+	return (str1);
 }

@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:48:52 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 15:52:17 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:58:18 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,23 @@ void	ft_init(t_mlx *mlx)
 	image_init(mlx);
 }
 
-void	ft_is_valid_arg(t_mlx *mlx, int ac, char **av)	
+void	ft_is_valid_arg(t_mlx *mlx, int ac, char **av)
 {
 	int	i;
 
 	if (ac != 2)
 		exit(1);
-	if (av == NULL)			
+	if (av == NULL)
 		exit(1);
 	if (av[1] == NULL)
 		exit(1);
-	if (av[1][0] == '\0')	
+	if (av[1][0] == '\0')
 		exit(1);
 	i = 0;
 	while (av[1][i])
 		i++;
 	if (i <= 4 || av[1][i - 5] == '/' || av[1][i - 4] != '.' ||
-			av[1][i - 3] != 'c' || av[1][i - 2] != 'u' || av[1][i - 1] != 'b') 
+			av[1][i - 3] != 'c' || av[1][i - 2] != 'u' || av[1][i - 1] != 'b')
 	{
 		write(2, "Error\nextention error\n", 22);
 		exit(1);
@@ -46,50 +46,45 @@ void	ft_is_valid_arg(t_mlx *mlx, int ac, char **av)
 
 void	ft_parsing(t_mlx *mlx)
 {
-	mlx->data.fd = open(mlx->data.av, O_RDONLY); 
-	if (mlx->data.fd == -1)						
+	mlx->data.fd = open(mlx->data.av, O_RDONLY);
+	if (mlx->data.fd == -1)
 	{
 		perror("ft_parsing: ");
 		exit(1);
 	}
 	ft_get_info(mlx);
-	ft_get_map(mlx);							
-	ft_is_valid_map(mlx);						
+	ft_get_map(mlx);
+	ft_is_valid_map(mlx);
 }
 
-int		ft_raycast(void *param)
+int	ft_raycast(void *param)
 {
 	t_mlx	*mlx;
-	mlx = (t_mlx *)param;
 	int		x;
 	int		wallheight;
 	int		wallstart;
 	int		wallend;
-	double	camera_x;			
-	
+	double	camera_x;
+
+	mlx = (t_mlx *)param;
 	mlx->img.img = mlx_new_image(mlx->mlx, mlx->screenWidth, mlx->screenHeight);
 	mlx->img.addr = mlx_get_data_addr(mlx->img.img, &mlx->img.bpp, &mlx->img.length, &mlx->img.endian);
-
-	x = 0;	
+	x = 0;
 	while (x < mlx->screenWidth)
 	{
-		camera_x = (2 * x / (double)mlx->screenWidth) - 1; 	
+		camera_x = (2 * x / (double)mlx->screenWidth) - 1;
 		mlx->ray.rdir_x = mlx->ray.dir_x + (mlx->ray.plane_x * camera_x);
 		mlx->ray.rdir_y = mlx->ray.dir_y + (mlx->ray.plane_y * camera_x);
-
-		ft_set_coordinate(&mlx->ray);					
-		ft_set_dda(&mlx->ray);							
-		ft_perform_dda(mlx, &mlx->ray);					
-		ft_calcul_distance(&mlx->ray);					
-
+		ft_set_coordinate(&mlx->ray);
+		ft_set_dda(&mlx->ray);
+		ft_perform_dda(mlx, &mlx->ray);
+		ft_calcul_distance(&mlx->ray);
 		wallheight = (int)(mlx->screenHeight / mlx->ray.plane_hitDist);
 		wallstart = (int)((mlx->screenHeight / 2) - (wallheight / 2));
-		wallend = (int) ((mlx->screenHeight / 2) + (wallheight / 2));
-
+		wallend = (int)((mlx->screenHeight / 2) + (wallheight / 2));
 		ft_draw_ceiling(mlx, x, wallstart, mlx->data.intceiling);
-		ft_draw_floor(mlx, x, wallend, mlx->data.intfloor);	
-
-		ft_get_wallX(&mlx->ray, mlx);
+		ft_draw_floor(mlx, x, wallend, mlx->data.intfloor);
+		ft_get_wall_x(&mlx->ray, mlx);
 		ft_get_walltexture(&mlx->ray, mlx, x);
 		x++;
 	}
@@ -97,11 +92,6 @@ int		ft_raycast(void *param)
 	mlx_destroy_image(mlx->mlx, mlx->img.img);
 	return (0);
 }
-
-// void check(void)
-// {
-// 	system("leaks ./cub3D");
-// }
 
 int	main(int ac, char **av)
 {
@@ -115,6 +105,5 @@ int	main(int ac, char **av)
 	mlx_hook(mlx.win, 17, 0, &ft_end_game, &mlx);
 	mlx_loop_hook(mlx.mlx, &ft_raycast, &mlx);
 	mlx_loop(mlx.mlx);
-	system("leaks ./cub3D");
 	return (0);
 }

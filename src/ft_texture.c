@@ -6,36 +6,36 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 22:26:03 by sanglee2          #+#    #+#             */
-/*   Updated: 2023/11/26 16:02:24 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:52:00 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	ft_get_wallX(t_ray *ray, t_mlx *mlx)
+void	ft_get_wall_x(t_ray *ray, t_mlx *mlx)
 {
-	double wallX;
-
+	double	wall_x;
 
 	if (ray->orthogonal == 0)
-		wallX = ray->pos_y + (ray->plane_hitDist * ray->rdir_y);
+		wall_x = ray->pos_y + (ray->plane_hitDist * ray->rdir_y);
 	else
-		wallX = ray->pos_x + (ray->plane_hitDist * ray->rdir_x);
-	wallX = wallX - floor(wallX);
+		wall_x = ray->pos_x + (ray->plane_hitDist * ray->rdir_x);
+	wall_x = wall_x - floor(wall_x);
 	if (ray->orthogonal == 0 && ray->rdir_x < 0)
-		wallX = 1.0 - wallX;
+		wall_x = 1.0 - wall_x;
 	else if (ray->orthogonal == 1 && ray->rdir_y > 0)
-		wallX = 1.0 - wallX;
-	ray->tex_x = (int) (wallX * (double)TEXWIDTH);
-	ray->wallheight = (int) (mlx->screenHeight / ray->plane_hitDist);
-	ray->wallstart =  mlx->screenHeight / 2 - ray->wallheight / 2;
+		wall_x = 1.0 - wall_x;
+	ray->tex_x = (int)(wall_x * (double)TEXWIDTH);
+	ray->wallheight = (int)(mlx->screenHeight / ray->plane_hitDist);
+	ray->wallstart = mlx->screenHeight / 2 - ray->wallheight / 2;
 	ray->wallend = mlx->screenHeight / 2 + ray->wallheight / 2;
 	if (ray->wallstart < 0)
 		ray->wallstart = 0;
 	if (ray->wallend >= mlx->screenHeight)
 		ray->wallend = mlx->screenHeight;
 	ray->ratio = 1.0 * TEXHEIGHT / ray->wallheight;
-	ray->texpos = (ray->wallstart - mlx->screenHeight / 2 + ray->wallheight / 2 ) * ray->ratio;
+	ray->texpos = (ray->wallstart - mlx->screenHeight / 2 \
+					+ ray->wallheight / 2) * ray->ratio;
 }
 
 void	user_mlx_pixel_put(t_img_data *img, int x, int y, int color)
@@ -46,15 +46,13 @@ void	user_mlx_pixel_put(t_img_data *img, int x, int y, int color)
 	*(unsigned int *)dest = color;
 }
 
-void	ft_get_walltexture(t_ray *ray , t_mlx *mlx, int x)
+void	ft_get_walltexture(t_ray *ray, t_mlx *mlx, int x)
 {
 	int	y;
-	int j;
-	int color;
-	
-	j = 0;
+	int	color;
+
 	y = ray->wallstart;
-	while(y < ray->wallend)
+	while (y < ray->wallend)
 	{
 		if (ray->tex_x >= TEXWIDTH)
 			ray->tex_x = TEXWIDTH - 1;
@@ -87,9 +85,8 @@ void	ft_get_walltexture(t_ray *ray , t_mlx *mlx, int x)
 						ray->tex_y * TEXWIDTH + ray->tex_x);
 			}
 		}
-		user_mlx_pixel_put(&mlx->img, x, y, color);	
+		user_mlx_pixel_put(&mlx->img, x, y, color);
 		ray->texpos = ray->texpos + ray->ratio;
 		y++;
-		j++;
 	}
 }

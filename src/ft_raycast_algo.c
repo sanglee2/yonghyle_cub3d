@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:05:14 by sanglee2          #+#    #+#             */
-/*   Updated: 2023/11/26 16:06:59 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:56:52 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	ft_set_coordinate(t_ray *ray)
 {
-
 	ray->mapX = (int)ray->pos_x;
 	ray->mapY = (int)ray->pos_y;
-
 	ray->varDistY = fabs(1 / ray->rdir_y);
 	ray->varDistX = fabs(1 / ray->rdir_x);
 }
@@ -48,7 +46,7 @@ void	ft_set_dda(t_ray *ray)
 
 void	ft_perform_dda(t_mlx *mlx, t_ray *ray)
 {
-	int hit;
+	int	hit;
 
 	hit = 0;
 	while (hit == 0)

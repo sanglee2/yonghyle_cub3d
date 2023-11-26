@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:47:30 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 16:04:01 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:35:33 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ size_t	ft_strlen(char *str)
 	}
 	return (len);
 }
+
 char	*ft_strdup(t_mlx *mlx, char *str)
 {
 	char	*tmp;
@@ -53,8 +54,6 @@ char	*ft_strdup(t_mlx *mlx, char *str)
 	}
 	return (tmp);
 }
-
-
 
 int	ft_strcmp(char *s1, char *s2)
 {
@@ -75,21 +74,4 @@ int	ft_is_num(char c)
 	if (c >= '0' && c <= '9')
 		return (TRUE);
 	return (FALSE);
-}
-
-char	*ft_strcpy(char *str1, char *str2)
-{
-	ssize_t len;
-	ssize_t i;
-
-	if (*str2 == '\0')
-		return (NULL);
-	len = ft_linelen(str2);
-	i = 0;
-	while (i < len)
-	{
-		str1[i] = str2[i];
-		i++;
-	}
-	return (str1);
 }

@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:57:51 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 15:52:56 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:41:00 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,13 @@ void	ft_get_map(t_mlx *mlx)
 	{
 		mlx->data.line = get_next_line(mlx->data.fd);
 		if (mlx->data.line == NULL)
-			break;
+			break ;
 		if (ft_is_empty_line(mlx->data.line) == TRUE)
 		{
 			ft_free_line(mlx);
 			if (mlx->map)
-				already_map = TRUE;			
-			continue;
+				already_map = TRUE;
+			continue ;
 		}
 		if (mlx->data.line && already_map == TRUE)
 		{

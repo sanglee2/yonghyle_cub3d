@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:45:06 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 16:04:19 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:33:54 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,19 @@ void	ft_bzero(void *str, size_t size)
 	if (!size)
 		return ;
 	ptr = (unsigned char *)str;
-	while(--size > 0)
+	while (--size > 0)
 		ptr[size] = 0;
-	ptr[size] = 0;	
+	ptr[size] = 0;
 }
 
 void	*ft_calloc(t_mlx *mlx, size_t count, size_t size)
-{ 	
-	(void)	mlx;
+{
 	void	*arr;
 
 	arr = (void *)malloc(count * size);
 	if (!arr)
 	{
-		printf("ft_calloc\n");	
+		printf("ft_calloc\n");
 		ft_free_mlx(mlx);
 	}
 	ft_bzero(arr, (count * size));

@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:51:31 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 16:04:19 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:56:46 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,23 @@ int	ft_find_longest_len(char **map)
 	return (max);
 }
 
-int		ft_max_width(char **map)
+int	ft_max_width(char **map)
 {
-	int max_width;
+	int	max_width;
 	int	length;
-	int height;
+	int	height;
 
 	max_width = 0;
 	height = 0;
-	while(map[height])
+	while (map[height])
 	{
 		length = ft_linelen(map[height]);
 		if (length > max_width)
 			max_width = length;
 		height++;
 	}
-	return (max_width);	
+	return (max_width);
 }
-
 
 void	*ft_memset(void *ptr, int value, size_t num)
 {
@@ -64,22 +63,20 @@ void	*ft_memset(void *ptr, int value, size_t num)
 	return (ptr);
 }
 
-
 void	ft_set_map(t_mlx *mlx)
 {
-	int 	i;
+	int	i;
 
 	i = 0;
 	mlx->mapHeight = ft_arrlen(mlx->map);
 	mlx->mapWidth = ft_max_width(mlx->map);
-
 	if (mlx->mapHeight < 3 || mlx->mapWidth < 3)
 	{
-		printf("invalid map size\n");	
+		printf("invalid map size\n");
 		ft_free_mlx(mlx);
 	}			
 	mlx->tmp = (char **)ft_calloc(mlx, mlx->mapHeight + 1, sizeof(char *));
-	while(i < mlx->mapHeight)
+	while (i < mlx->mapHeight)
 	{
 		mlx->tmp[i] = (char *)ft_calloc(mlx, mlx->mapWidth + 1, sizeof(char));
 		ft_memset(mlx->tmp[i], ' ', mlx->mapWidth);

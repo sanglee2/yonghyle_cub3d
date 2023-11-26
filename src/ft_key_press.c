@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:52:52 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 15:55:01 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 17:32:13 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,62 +24,64 @@ int	ft_end_game(t_mlx *mlx)
 
 void	ft_go_forward(t_mlx *mlx, t_ray *ray)
 {
-	if (mlx->map[(int)(ray->pos_y)][(int)(ray->pos_x + ray->dir_x * MOVE_RATIO)] != '1')
-		ray->pos_x = ray->pos_x + ray->dir_x * MOVE_RATIO;
-	if (mlx->map[(int)(ray->pos_y + ray->dir_y * MOVE_RATIO)][(int)(ray->pos_x)] != '1')
-		ray->pos_y = ray->pos_y + ray->dir_y * MOVE_RATIO;
-
+	if (ray->dir_x > 0)
+	{
+		if (mlx->map[(int)(ray->pos_y)][(int)(ray->pos_x + ray->dir_x * M + 0.1)] != '1')
+			ray->pos_x = ray->pos_x + ray->dir_x * M;
+	}
+	else if (ray->dir_x < 0)
+	{
+		if (mlx->map[(int)(ray->pos_y)][(int)(ray->pos_x + ray->dir_x * M - 0.1)] != '1')
+			ray->pos_x = ray->pos_x + ray->dir_x * M;
+	}
+	if (ray->dir_y > 0)
+	{	
+		if (mlx->map[(int)(ray->pos_y + ray->dir_y * M + 0.1)][(int)(ray->pos_x)] != '1')
+			ray->pos_y = ray->pos_y + ray->dir_y * M;
+	}
+	else if (ray->dir_y < 0)
+	{
+		if (mlx->map[(int)(ray->pos_y + ray->dir_y * M - 0.1)][(int)(ray->pos_x)] != '1')
+			ray->pos_y = ray->pos_y + ray->dir_y * M;
+	}
 }
 
 void	ft_go_backward(t_mlx *mlx, t_ray *ray)
 {
-	if (mlx->map[(int)(ray->pos_y)][(int)(ray->pos_x - ray->dir_x * MOVE_RATIO)] != '1')
-		ray->pos_x = ray->pos_x - ray->dir_x * MOVE_RATIO;
-	if (mlx->map[(int)(ray->pos_y - ray->dir_y * MOVE_RATIO)][(int)(ray->pos_x)] != '1')
-		ray->pos_y = ray->pos_y - ray->dir_y * MOVE_RATIO;
+	if (ray->dir_x > 0)
+	{
+		if (mlx->map[(int)(ray->pos_y)][(int)(ray->pos_x - ray->dir_x * M - 0.1)] != '1')
+			ray->pos_x = ray->pos_x - ray->dir_x * M;
+	}
+	else if (ray->dir_x < 0)
+	{
+		if (mlx->map[(int)(ray->pos_y)][(int)(ray->pos_x - ray->dir_x * M + 0.1)] != '1')
+			ray->pos_x = ray->pos_x - ray->dir_x * M;
+	}
+	if (ray->dir_y > 0)
+	{
+		if (mlx->map[(int)(ray->pos_y - ray->dir_y * M - 0.1)][(int)(ray->pos_x)] != '1')
+		ray->pos_y = ray->pos_y - ray->dir_y * M;
+	}
+	else if (ray->dir_y < 0)
+	{
+		if (mlx->map[(int)(ray->pos_y - ray->dir_y * M + 0.1)][(int)(ray->pos_x)] != '1')
+			ray->pos_y = ray->pos_y - ray->dir_y * M;
+	}
 }
 
 void	ft_go_left(t_mlx *mlx, t_ray *ray)
 {
-	if (mlx->map[(int)(ray->pos_y)][(int)(ray->pos_x + ray->dir_y * MOVE_RATIO)] != '1')
-		ray->pos_x = ray->pos_x + ray->dir_y * MOVE_RATIO;
-	if (mlx->map[(int)(ray->pos_y - ray->dir_x * MOVE_RATIO)][(int)(ray->pos_x)] != '1')
-		ray->pos_y = ray->pos_y - ray->dir_x * MOVE_RATIO;
+	if (mlx->map[(int)(ray->pos_y)][(int)(ray->pos_x + ray->dir_y * M)] != '1')
+		ray->pos_x = ray->pos_x + ray->dir_y * M;
+	if (mlx->map[(int)(ray->pos_y - ray->dir_x * M)][(int)(ray->pos_x)] != '1')
+		ray->pos_y = ray->pos_y - ray->dir_x * M;
 }
 
 void	ft_go_right(t_mlx *mlx, t_ray *ray)
 {
-	if (mlx->map[(int)(ray->pos_y)][(int)(ray->pos_x - ray->dir_y * MOVE_RATIO)] != '1')
-		ray->pos_x = ray->pos_x - ray->dir_y * MOVE_RATIO;
-	if (mlx->map[(int)(ray->pos_y + ray->dir_x * MOVE_RATIO)][(int)(ray->pos_x)] != '1')
-		ray->pos_y = ray->pos_y + ray->dir_x * MOVE_RATIO;
+	if (mlx->map[(int)(ray->pos_y)][(int)(ray->pos_x - ray->dir_y * M)] != '1')
+		ray->pos_x = ray->pos_x - ray->dir_y * M;
+	if (mlx->map[(int)(ray->pos_y + ray->dir_x * M)][(int)(ray->pos_x)] != '1')
+		ray->pos_y = ray->pos_y + ray->dir_x * M;
 }
-
-void	ft_move(int keycode, t_mlx *mlx)
-{
-	if (keycode == KEY_W)
-		ft_go_forward(mlx, &mlx->ray);
-	else if (keycode == KEY_A)
-		ft_go_left(mlx, &mlx->ray);
-	else if (keycode == KEY_S)
-		ft_go_backward(mlx, &mlx->ray);
-	else if (keycode == KEY_D)
-		ft_go_right(mlx, &mlx->ray);
-}
-
-int	ft_key_press(int keycode, t_mlx *mlx)
-{
-	if (keycode == KEY_ESC)
-		ft_end_game(mlx);
-	else if (keycode == KEY_W || keycode == KEY_A \
-			|| keycode == KEY_S || keycode == KEY_D)
-			{
-				ft_move(keycode, mlx);
-			}
-	else if (keycode == KEY_R || keycode == KEY_L)
-		ft_rotate(keycode, &mlx->ray);
-	return (0);	
-}
-
-
-

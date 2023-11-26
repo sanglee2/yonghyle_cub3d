@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:54:51 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 15:54:08 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:43:04 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_get_dir_vector(t_mlx *mlx, char c)
 	else if (c == 'S')
 	{
 		mlx->ray.dir_y = -1;
-		mlx->ray.plane_x = 0.66;	
+		mlx->ray.plane_x = 0.66;
 	}
 	if (c == 'W')
 	{
@@ -49,7 +49,7 @@ void	ft_find_player(t_mlx *mlx, int player, int x, int y)
 				ft_get_dir_vector(mlx, mlx->tmp[y][x]);
 				mlx->data.x = x;
 				mlx->data.y = y;
-				player++;								
+				player++;
 			}
 			x++;
 		}
@@ -57,7 +57,7 @@ void	ft_find_player(t_mlx *mlx, int player, int x, int y)
 	}
 	if (player != 1)
 	{
-		printf("player is not alone\n");	
+		printf("player is not alone\n");
 		ft_free_mlx(mlx);
 	}
 }
