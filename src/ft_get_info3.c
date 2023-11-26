@@ -1,58 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_info2.c                                     :+:      :+:    :+:   */
+/*   ft_get_info3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:59:20 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 17:31:57 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 17:52:03 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	ft_get_texture(t_mlx *mlx)
+void	ft_num_true(t_mlx *mlx)
 {
-	if (mlx->data.information[0] == NULL)
-		return ;
-	ft_check_texture_element(mlx, &mlx->data);
-	set_texture_element(mlx, &mlx->data);
+	if (mlx->color.num_flag == 0)
+	{
+		mlx->color.element++;
+		mlx->color.num_flag = 1;
+	}
+	mlx->color.serial_comma = 0;
+}
+
+void	ft_serial_comma_zero(t_mlx *mlx)
+{
+	if (mlx->color.comma == 2)
+	{
+		printf("ft_syntax_of_serial_comma\n");
+		ft_free_mlx(mlx);
+	}
+	mlx->color.serial_comma++;
+	mlx->color.comma++;
+	mlx->color.num_flag = 0;
 }
 
 void	ft_syntax_of_color(t_mlx *mlx, char *str)
 {
-	int	comma;
-	int	element;
-	int	num_flag;
-	int	serial_comma;
-
-	comma = 0;
-	element = 0;
-	num_flag = 0;
-	serial_comma = 0;
+	ft_bzero(&mlx->color, sizeof(mlx->color));
 	while (*str != '\0')
 	{
 		if (ft_is_num(*str) == TRUE)
-		{
-			if (num_flag == 0)
-			{
-				element++;
-				num_flag = 1;
-			}
-			serial_comma = 0;
-		}
-		else if (*str == ',' && serial_comma == 0)
-		{
-			if (comma == 2)
-			{
-				printf("ft_syntax_of_serial_comma\n");
-				ft_free_mlx(mlx);
-			}
-			serial_comma++;
-			comma++;
-			num_flag = 0;
-		}
+			ft_num_true(mlx);
+		else if (*str == ',' && mlx->color.serial_comma == 0)
+			ft_serial_comma_zero(mlx);
 		else
 		{
 			printf("ft_syntax_of_white_space");
@@ -60,72 +50,9 @@ void	ft_syntax_of_color(t_mlx *mlx, char *str)
 		}
 		str++;
 	}
-	if (element > 3 || comma != 2)
+	if (mlx->color.element > 3 || mlx->color.comma != 2)
 	{
 		printf("ft_check_element_comma\n");
 		ft_free_mlx(mlx);
 	}
-}
-
-void	ft_str_to_int(t_mlx *mlx, char *str)
-{
-	while (*str != ',')
-	{
-		mlx->data.R = mlx->data.R * 10 + (*str - '0');
-		str++;
-	}
-	str++;
-	while (*str != ',')
-	{
-		mlx->data.G = mlx->data.G * 10 + (*str - '0');
-		str++;
-	}
-	str++;
-	while (*str != '\0')
-	{
-		mlx->data.B = mlx->data.B * 10 + (*str - '0');
-		str++;
-	}
-	if (mlx->data.R > 255 || mlx->data.R < 0 || \
-		mlx->data.G > 255 || mlx->data.G < 0 || \
-		mlx->data.B > 255 || mlx->data.B < 0)
-	{
-		printf("Wrong RGB value\n");
-		ft_free_mlx(mlx);
-	}
-}
-
-int	ft_edit_color(t_mlx *mlx, char *str)
-{
-	if (str == NULL)
-	{	
-		printf("none RGB value\n");
-		ft_free_mlx(mlx);
-	}
-	ft_syntax_of_color(mlx, str);
-	mlx->data.R = 0;
-	mlx->data.G = 0;
-	mlx->data.B = 0;
-	ft_str_to_int(mlx, str);
-	return ((mlx->data.R << 16) | (mlx->data.G << 8) | mlx->data.B);
-}
-
-void	ft_get_info(t_mlx *mlx)
-{
-	while (1)
-	{
-		mlx->data.line = get_next_line(mlx->data.fd);
-		if (mlx->data.line == NULL)
-			break ;
-		mlx->data.information = ft_split(mlx->data.line);
-		ft_get_texture(mlx);
-		ft_free_info(&mlx->data);
-		ft_free_line(mlx);
-		mlx->data.line = NULL;
-		if (mlx->data.north && mlx->data.south && mlx->data.west && \
-			mlx->data.east && mlx->data.floor && mlx->data.ceiling)
-			break ;
-	}
-	mlx->data.intfloor = ft_edit_color(mlx, mlx->data.floor);
-	mlx->data.intceiling = ft_edit_color(mlx, mlx->data.ceiling);
 }

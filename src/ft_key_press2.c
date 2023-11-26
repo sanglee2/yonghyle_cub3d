@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:52:52 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 16:50:09 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 17:50:20 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int	ft_key_press(int keycode, t_mlx *mlx)
 		ft_move(keycode, mlx);
 	}
 	else if (keycode == KEY_R || keycode == KEY_L)
-		ft_rotate(keycode, &mlx->ray);
+	{
+		if (keycode == KEY_L)
+			ft_key_l(&mlx->ray);
+		else
+			ft_key_r(&mlx->ray);
+	}	
 	return (0);
 }

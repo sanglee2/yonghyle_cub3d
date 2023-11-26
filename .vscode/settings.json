@@ -12,6 +12,7 @@
 		"iterator": "c",
 		"unordered_map": "c",
 		"utility": "c",
-		"vector": "c"
+		"vector": "c",
+		"cub3d.h": "c"
 	}
 }

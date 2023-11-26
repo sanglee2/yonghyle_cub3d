@@ -38,6 +38,14 @@
 # define FL			4
 # define CE			5
 
+typedef struct s_color
+{
+	int	comma;
+	int	element;
+	int	num_flag;
+	int	serial_comma;
+}  t_color;
+
 typedef struct s_data
 {
 	char		*av;
@@ -121,6 +129,7 @@ typedef struct s_mlx
 	t_img_data	img_data[4];
 	t_img_data	img;
 	t_data	data;
+	t_color color;
 	t_ray	ray;
 	t_3d	ddd;
 	int		linenum;
@@ -134,7 +143,6 @@ typedef struct s_mlx
 	int		screenHeight;
 	int		keycode;
 }	t_mlx;
-
 
 /*		ft_draw_texture.c		*/
 void	ft_draw_ceiling(t_mlx *mlx, int x, int wallstart, int color);
@@ -199,7 +207,8 @@ void	ft_perform_dda(t_mlx *mlx, t_ray *ray);
 void	ft_calcul_distance(t_ray *ray);
 
 /*		ft_rotate.c				*/
-void	ft_rotate(int keycode, t_ray *ray);
+void	ft_key_r(t_ray *ray);
+void	ft_key_l(t_ray *ray);
 
 /*		ft_set_map		*/
 int		ft_find_longest_len(char **map);
