@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:56:28 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/24 16:55:41 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 13:45:13 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_init_texture(t_mlx *mlx)              // mlx_xpm_file_to_image -> 터졌
 	mlx->img_data[EA].img = mlx_xpm_file_to_image(mlx->mlx, mlx->data.east, \
 							&mlx->img_data[EA].width, &mlx->img_data[EA].height);
 }
+
 void	ft_load_texture(t_mlx *mlx)				 // for문으로 빨리 작성하는 방법 get.
 {
 	int i;

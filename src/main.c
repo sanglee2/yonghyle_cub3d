@@ -6,25 +6,24 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:48:52 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/25 23:13:33 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 14:18:38 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	ft_init(t_mlx *mlx) 
+void	ft_init(t_mlx *mlx)
 {
 	window_init(mlx);
-
 	// mlx->ray.radius = GRID_LEN / 2;
 	mlx->ray.pos_x = mlx->data.x + 0.5;
 	// mlx->ray.pos_x = mlx->data.x + 0.5;
 	mlx->ray.pos_y = mlx->data.y + 0.5;
 	// mlx->ray.pos_y = mlx->data.y + 0.5;
-	// mlx->ray.cam_plane_len = GRID_LEN;				
-	// mlx->ddd.ratio = mlx->screenWidth / GRID_LEN;   
-	// mlx->ddd.diagonal = sqrt(mlx->screenWidth * mlx->screenWidth + 
-							// mlx->screenHeight * mlx->screenHeight); 		
+	// mlx->ray.cam_plane_len = GRID_LEN;
+	// mlx->ddd.ratio = mlx->screenWidth / GRID_LEN;
+	// mlx->ddd.diagonal = sqrt(mlx->screenWidth * mlx->screenWidth +
+							// mlx->screenHeight * mlx->screenHeight);
 	image_init(mlx);
 }
 
@@ -46,7 +45,7 @@ void	ft_is_valid_arg(t_mlx *mlx, int ac, char **av)
 	if (i <= 4 || av[1][i - 5] == '/' || av[1][i - 4] != '.' ||
 			av[1][i - 3] != 'c' || av[1][i - 2] != 'u' || av[1][i - 1] != 'b') 
 	{
-		write(2, "Error\nextention error\n", 22);
+		write(2, "Error\nextention error\n", 22);				// '/'는 왜 필요한가?
 		exit(1);
 	}
 	mlx->data.av = av[1];
@@ -60,7 +59,7 @@ void	ft_parsing(t_mlx *mlx)
 		perror("ft_parsing: ");
 		exit(1);
 	}
-	ft_get_info(mlx);							
+	ft_get_info(mlx);								// .cub 맵파일 확인하는 부분.							
 	ft_get_map(mlx);							
 	ft_is_valid_map(mlx);						
 }
@@ -100,16 +99,24 @@ int		ft_raycast(void *param)
 		wallstart = (int)((mlx->screenHeight / 2) - (wallheight / 2));
 		wallend = (int) ((mlx->screenHeight / 2) + (wallheight / 2));
 
+		// printf("%d, %d, %d\n", wallheight, wallstart, wallend);
+
 		// printf("%lf\n",(mlx->screenHeight / mlx->ray.plane_hitDist));
 
 		ft_draw_ceiling(mlx, x, wallstart, mlx->data.intceiling);
 		// ft_draw_wall(mlx, x, wallstart, wallend);
 		ft_draw_floor(mlx, x, wallend, mlx->data.intfloor);	
 		
+
+
 		ft_get_wallX(&mlx->ray, mlx);
 		ft_get_walltexture(&mlx->ray, mlx, x);
 		x++;
 	}
+	// printf("%d, %d, %d\n", wallheight, wallstart, wallend);
+	// printf("pos_y : %lf\n", mlx->ray.pos_y);
+	// printf("pos_x : %lf\n", mlx->ray.pos_x);
+	// printf("map : %c\n", mlx->map[(int)mlx->ray.pos_y][(int)mlx->ray.pos_x]);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);		// image_data의 배열. 배열을 넣을것인가?!
 	mlx_destroy_image(mlx->mlx, mlx->img.img);
 	return (0);
@@ -122,17 +129,16 @@ int		ft_raycast(void *param)
 
 int	main(int ac, char **av)
 {
-	// atexit(check);
 	t_mlx	mlx;	
 
-	ft_bzero(&mlx, sizeof(mlx));	
-	ft_is_valid_arg(&mlx, ac, av); 
+	ft_bzero(&mlx, sizeof(mlx));
+	ft_is_valid_arg(&mlx, ac, av);
 	ft_parsing(&mlx);
-	ft_init(&mlx);					
-	mlx_hook(mlx.win, 2, 0, &ft_key_press, &mlx); 
-	mlx_hook(mlx.win, 17, 0, &ft_end_game, &mlx); 
-	mlx_loop_hook(mlx.mlx, &ft_raycast, &mlx);	
+	ft_init(&mlx);
+	mlx_hook(mlx.win, 2, 0, &ft_key_press, &mlx);
+	mlx_hook(mlx.win, 17, 0, &ft_end_game, &mlx);
+	mlx_loop_hook(mlx.mlx, &ft_raycast, &mlx);
 	mlx_loop(mlx.mlx);
-	// system("leaks ./cub3D");							
+	system("leaks ./cub3D");
 	return (0);
 }

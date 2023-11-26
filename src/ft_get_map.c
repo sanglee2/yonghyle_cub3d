@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:57:51 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/25 18:28:24 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 12:53:18 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	ft_syntax_of_map(t_mlx *mlx, char *line)
 	{
 		if (!(ft_is_space(*line) == TRUE || *line == '1' || *line == '0' || \
 			*line == 'N' || *line == 'S' || *line == 'W' || *line == 'E'))
+		{
+			printf("ft_syntax_of_map\n");
 			ft_free_mlx(mlx);
+		}
 		if (*line == '\n')		// Q.개행일 때, 0처리 왜 한 거지?
 			*line = 0;
 		line++;
@@ -85,7 +88,10 @@ void	ft_get_map(t_mlx *mlx)							// 조금 더 깔끔히 바꿀 순 없을까?!
 			continue;
 		}
 		if (mlx->data.line && already_map == TRUE)
+		{
+			printf("ft_get_map\n");
 			ft_free_mlx(mlx);						// 이 분기에서 빠져버리게 - 에러 문구 처리도 같이.
+		}
 		ft_syntax_of_map(mlx, mlx->data.line);
 		ft_line_to_map(mlx);						// 맵 옮기는 작업 잘할 것.
 		ft_free_line(mlx);

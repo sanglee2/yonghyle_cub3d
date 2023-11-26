@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:05:14 by sanglee2          #+#    #+#             */
-/*   Updated: 2023/11/25 13:09:32 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 14:03:27 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_set_dda(t_ray *ray)                                            // 각 �
 		ray->stepY = -1;
 		ray->initDistY = (ray->pos_y - ray->mapY) * ray->varDistY;
 	}
-	// 각 x격자, y격자 기준 이동거리.	
+	// 각 x격자, y격자 기준 이동거리.
 }
 
 void	ft_perform_dda(t_mlx *mlx, t_ray *ray)
@@ -83,7 +83,7 @@ void	ft_perform_dda(t_mlx *mlx, t_ray *ray)
 		{
 			ray->initDistY = ray->initDistY + ray->varDistY;
 			ray->mapY = ray->mapY + ray->stepY;
-			ray->orthogonal = 1;						
+			ray->orthogonal = 1;
 		}
 		if (mlx->map[ray->mapY][ray->mapX] == '1')						// map free 안하고 갖고 있어야 해.
 		{
@@ -123,5 +123,4 @@ void	ft_calcul_distance(t_ray *ray)
 		// 	// printf("4444444\n");
 		// }
 	}
-
 }

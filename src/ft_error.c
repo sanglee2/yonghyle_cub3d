@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jihokim2 <jihokim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 13:02:40 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/10/28 13:05:05 by jihokim2         ###   ########.fr       */
+/*   Updated: 2023/11/26 12:55:27 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,24 @@ void	ft_free_tmp(t_mlx *mlx)
 	}
 }
 
+void	ft_free_info(t_data *data)
+{
+	int	i;
+
+	if (data->information)
+	{
+		i = 0;
+		while (data->information[i])
+		{
+			free(data->information[i]);
+			data->information[i] = NULL;
+			i++;
+		}
+		free(data->information);
+		data->information = NULL;
+	}
+}
+
 void	ft_free_line(t_mlx *mlx)
 {
 	if (mlx->data.line)
@@ -59,9 +77,10 @@ void	ft_free_line(t_mlx *mlx)
 
 void	ft_free_mlx(t_mlx *mlx)
 {
-	printf("\error\nft_free_mlx\n");
+	printf("error\nft_free_mlx\n");
 	ft_free_map(mlx);
 	ft_free_tmp(mlx);
+	ft_free_info(&mlx->data);
 	ft_free_line(mlx);
 	exit(1);
 }

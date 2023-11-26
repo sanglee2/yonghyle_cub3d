@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:51:31 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/25 22:18:01 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 12:52:43 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,11 @@ void	ft_set_map(t_mlx *mlx)
 	mlx->mapHeight = ft_arrlen(mlx->map);
 	mlx->mapWidth = ft_max_width(mlx->map);
 
-	if (mlx->mapHeight < 3 || mlx->mapWidth < 3)      // 3줄 이상은 무조건 있어야 맵 완성.			
+	if (mlx->mapHeight < 3 || mlx->mapWidth < 3)      // 3줄 이상은 무조건 있어야 맵 완성.
+	{
+		printf("invalid map size\n");	
 		ft_free_mlx(mlx);
+	}			
 	mlx->tmp = (char **)ft_calloc(mlx, mlx->mapHeight + 1, sizeof(char *));
 	while(i < mlx->mapHeight)
 	{

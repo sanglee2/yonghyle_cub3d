@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 13:12:55 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/25 18:25:51 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 14:24:41 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_draw_floor(t_mlx *mlx, int x, int wallend, int color)
 	int	y;
 
 	y = wallend - 1;
+	// printf("%d\n", mlx->screenHeight);
 	while (++y < mlx->screenHeight)
 		user_mlx_pixel_put(&mlx->img, x, y, color);
 		// mlx_pixel_put(mlx->mlx, mlx->win, x, y, color);

@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:45:06 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/24 15:23:08 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 12:53:11 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,11 @@ void	*ft_calloc(t_mlx *mlx, size_t count, size_t size)
 	void	*arr;
 
 	arr = (void *)malloc(count * size);
-	// if (!arr)
-	// 	ft_free_mlx(mlx);
+	if (!arr)
+	{
+		printf("ft_calloc\n");	
+		ft_free_mlx(mlx);
+	}
 	ft_bzero(arr, (count * size));
 	return (arr);
 }

@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:54:51 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/25 20:09:24 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 12:53:12 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,19 @@ void	ft_find_player(t_mlx *mlx, int player, int x, int y)
 		y++;
 	}
 	if (player != 1)									// player = 1 딱 한 명만 있어야 하는 요소.
+	{
+		printf("player is not alone\n");	
 		ft_free_mlx(mlx);
+	}
 }
 
 void	ft_dfs(t_mlx *mlx, int x, int y, int k)
 {
 	if (mlx->tmp[y][x] == ' ')
+	{
+		printf("ft_dfs\n");
 		ft_free_mlx(mlx);
+	}
 	if (mlx->tmp[y][x] == '1')
 		return ;
 	else
