@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:45:06 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 12:53:11 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:04:19 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,6 @@ int	ft_linelen(char *line)
 	return (len);
 }
 
-// char	*ft_strcpy(t_mlx *mlx, char *str)
-// {
-// 	char	*tmp;
-// 	size_t	len;
-// 	size_t	i;
-
-// 	if (*str == '\0')
-// 		return (NULL);
-// 	len = ft_strlen(str);
-// 	tmp = (char *)ft_calloc(mlx, len + 1, sizeof(char));
-// 	i = 0;
-// 	while (i < len)
-// 	{
-// 		tmp[i] = str[i];
-// 		i++;
-// 	}
-// 	// tmp[i] = '\0'; // calloc 
-// 	return (tmp);
-// }
-
 char	*ft_linecpy(t_mlx *mlx, char *line)
 {
 	char	*tmp;
@@ -49,7 +29,7 @@ char	*ft_linecpy(t_mlx *mlx, char *line)
 	int		i;
 
 	len = ft_linelen(line);
-	tmp = (char *)ft_calloc(mlx, len + 1, sizeof(char)); // 마지막 문자 이후에 널문자 넣을 필요가 없음.
+	tmp = (char *)ft_calloc(mlx, len + 1, sizeof(char));
 	i = 0;
 	while (i < len)
 	{
@@ -58,20 +38,6 @@ char	*ft_linecpy(t_mlx *mlx, char *line)
 	}
 	return (tmp);
 }
-
-
-// char	*ft_linecpy(t_mlx *mlx, char *line)
-// {
-// 	char	*tmp;
-// 	int		len;
-// 	int		i;
-
-// 	tmp = (char *)ft_calloc(mlx, ft_linelen(line) + 1, sizeof(char)); // 마지막 문자 이후에 널문자 넣을 필요가 없음.
-// 	i = -1;
-// 	while (line[++i])
-// 		tmp[i] = line[i];
-// 	return (tmp);
-// }
 
 int	ft_arrlen(char **arr)
 {

@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:48:52 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 14:18:38 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 15:52:17 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,8 @@
 void	ft_init(t_mlx *mlx)
 {
 	window_init(mlx);
-	// mlx->ray.radius = GRID_LEN / 2;
 	mlx->ray.pos_x = mlx->data.x + 0.5;
-	// mlx->ray.pos_x = mlx->data.x + 0.5;
 	mlx->ray.pos_y = mlx->data.y + 0.5;
-	// mlx->ray.pos_y = mlx->data.y + 0.5;
-	// mlx->ray.cam_plane_len = GRID_LEN;
-	// mlx->ddd.ratio = mlx->screenWidth / GRID_LEN;
-	// mlx->ddd.diagonal = sqrt(mlx->screenWidth * mlx->screenWidth +
-							// mlx->screenHeight * mlx->screenHeight);
 	image_init(mlx);
 }
 
@@ -45,7 +38,7 @@ void	ft_is_valid_arg(t_mlx *mlx, int ac, char **av)
 	if (i <= 4 || av[1][i - 5] == '/' || av[1][i - 4] != '.' ||
 			av[1][i - 3] != 'c' || av[1][i - 2] != 'u' || av[1][i - 1] != 'b') 
 	{
-		write(2, "Error\nextention error\n", 22);				// '/'는 왜 필요한가?
+		write(2, "Error\nextention error\n", 22);
 		exit(1);
 	}
 	mlx->data.av = av[1];
@@ -59,7 +52,7 @@ void	ft_parsing(t_mlx *mlx)
 		perror("ft_parsing: ");
 		exit(1);
 	}
-	ft_get_info(mlx);								// .cub 맵파일 확인하는 부분.							
+	ft_get_info(mlx);
 	ft_get_map(mlx);							
 	ft_is_valid_map(mlx);						
 }
@@ -69,16 +62,10 @@ int		ft_raycast(void *param)
 	t_mlx	*mlx;
 	mlx = (t_mlx *)param;
 	int		x;
-	int		wallheight;				// 구조체 안에 넣는 거 생각해 볼 거.
+	int		wallheight;
 	int		wallstart;
 	int		wallend;
 	double	camera_x;			
-	// int		buffer[mlx->screenHeight][mlx->screenWidth];	//스크린 버퍼 배열 선언.
-	// int		texture[8];			// 텍스처 배열 선언.
-	// player가 바라보는 방향벡터 - setting dir_x & dir_y
-	// player의 위치 - setting 완료 ++ 어디 & 잘 세팅 되어있는지 체크하기!
-
-	// ft_get_plane_vector(mlx);
 	
 	mlx->img.img = mlx_new_image(mlx->mlx, mlx->screenWidth, mlx->screenHeight);
 	mlx->img.addr = mlx_get_data_addr(mlx->img.img, &mlx->img.bpp, &mlx->img.length, &mlx->img.endian);
@@ -99,25 +86,14 @@ int		ft_raycast(void *param)
 		wallstart = (int)((mlx->screenHeight / 2) - (wallheight / 2));
 		wallend = (int) ((mlx->screenHeight / 2) + (wallheight / 2));
 
-		// printf("%d, %d, %d\n", wallheight, wallstart, wallend);
-
-		// printf("%lf\n",(mlx->screenHeight / mlx->ray.plane_hitDist));
-
 		ft_draw_ceiling(mlx, x, wallstart, mlx->data.intceiling);
-		// ft_draw_wall(mlx, x, wallstart, wallend);
 		ft_draw_floor(mlx, x, wallend, mlx->data.intfloor);	
-		
-
 
 		ft_get_wallX(&mlx->ray, mlx);
 		ft_get_walltexture(&mlx->ray, mlx, x);
 		x++;
 	}
-	// printf("%d, %d, %d\n", wallheight, wallstart, wallend);
-	// printf("pos_y : %lf\n", mlx->ray.pos_y);
-	// printf("pos_x : %lf\n", mlx->ray.pos_x);
-	// printf("map : %c\n", mlx->map[(int)mlx->ray.pos_y][(int)mlx->ray.pos_x]);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);		// image_data의 배열. 배열을 넣을것인가?!
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);
 	mlx_destroy_image(mlx->mlx, mlx->img.img);
 	return (0);
 }

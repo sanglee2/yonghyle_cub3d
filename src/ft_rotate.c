@@ -6,13 +6,13 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:13:18 by sanglee2          #+#    #+#             */
-/*   Updated: 2023/11/23 21:03:16 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 15:57:44 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	ft_rotate(int keycode, t_ray *ray)			// key_hook에서 잡고, 다시 그릴 때 언제 필요하느냐
+void	ft_rotate(int keycode, t_ray *ray)
 {
 	double prev_dir_x;
 	double prev_plane_x;

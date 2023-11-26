@@ -6,13 +6,13 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:56:28 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 13:45:13 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 15:53:23 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	ft_init_texture(t_mlx *mlx)              // mlx_xpm_file_to_image -> 터졌을 때 어떻게 처리하는지.
+void	ft_init_texture(t_mlx *mlx)
 {
 	mlx->img_data[NO].img = mlx_xpm_file_to_image(mlx->mlx, mlx->data.north, \
 							&mlx->img_data[NO].width, &mlx->img_data[NO].height);
@@ -24,7 +24,7 @@ void	ft_init_texture(t_mlx *mlx)              // mlx_xpm_file_to_image -> 터졌
 							&mlx->img_data[EA].width, &mlx->img_data[EA].height);
 }
 
-void	ft_load_texture(t_mlx *mlx)				 // for문으로 빨리 작성하는 방법 get.
+void	ft_load_texture(t_mlx *mlx)
 {
 	int i;
 

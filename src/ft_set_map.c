@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:51:31 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 12:52:43 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:04:19 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_set_map(t_mlx *mlx)
 	mlx->mapHeight = ft_arrlen(mlx->map);
 	mlx->mapWidth = ft_max_width(mlx->map);
 
-	if (mlx->mapHeight < 3 || mlx->mapWidth < 3)      // 3줄 이상은 무조건 있어야 맵 완성.
+	if (mlx->mapHeight < 3 || mlx->mapWidth < 3)
 	{
 		printf("invalid map size\n");	
 		ft_free_mlx(mlx);
@@ -83,8 +83,8 @@ void	ft_set_map(t_mlx *mlx)
 	{
 		mlx->tmp[i] = (char *)ft_calloc(mlx, mlx->mapWidth + 1, sizeof(char));
 		ft_memset(mlx->tmp[i], ' ', mlx->mapWidth);
-		mlx->tmp[i][mlx->mapWidth] = '\0';			// 굳이  필요없없는  구구문문.
-		ft_strcpy(mlx->tmp[i], mlx->map[i]);		// NULL 일 때 copy 잘 되는지 봐야지.
+		mlx->tmp[i][mlx->mapWidth] = '\0';
+		ft_strcpy(mlx->tmp[i], mlx->map[i]);
 		i++;
 	}
 }

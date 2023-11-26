@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 12:44:44 by sanglee2          #+#    #+#             */
-/*   Updated: 2023/11/26 12:45:00 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 15:58:15 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char **ft_split(char *str)
 		j = i;
 		while (str[i] && !is_space(str[i]))
 			i++;
-		if (i > j) // (i != j)
+		if (i > j) 
 		{
 			ret[k] = (char *)malloc(sizeof(char) * ((i - j) + 1));
 			ft_strncpy(ret[k], &str[j], i - j);

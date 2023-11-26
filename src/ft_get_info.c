@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:59:20 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 15:39:38 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 15:52:02 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	set_texture_element(t_mlx *mlx, t_data *data)
 		mlx->data.floor = ft_strdup(mlx, data->information[1]);
 	else
 	{
-		printf("identifer is duplicated\n");			// free하고 에러 처리하는 함수.
+		printf("identifer is duplicated\n");
 		ft_free_mlx(mlx);
 	}
 	return (1);
@@ -207,17 +207,17 @@ void	ft_get_info(t_mlx *mlx)
 	while (1)
 	{
 		mlx->data.line = get_next_line(mlx->data.fd);
-		if (mlx->data.line == NULL)	// 1줄씩 읽어오기 - 반복문(탈출조건). line = NULL이면 탈출.
+		if (mlx->data.line == NULL)
 			break ;
 		mlx->data.information = ft_split(mlx->data.line);
-		ft_get_texture(mlx);		// 각 line에서 map대한 유효한 정보 - 동서남북 천장/바닥.
-		ft_free_info(&mlx->data); // information 구조체 free.
-		ft_free_line(mlx);			// data.line을 free하고, Null pointer 초기화. - gnl 내에서 malloc
+		ft_get_texture(mlx);
+		ft_free_info(&mlx->data);
+		ft_free_line(mlx);
 		mlx->data.line = NULL;
 		if (mlx->data.north && mlx->data.south && mlx->data.west && \
-			mlx->data.east && mlx->data.floor && mlx->data.ceiling)	// 방향정보, 위아래 정보 전부 획들 했을 경우 - 나가기, 위에서 정보들 다 채울 수 밖에 없음.
+			mlx->data.east && mlx->data.floor && mlx->data.ceiling)
 			break ;
 	}
-	mlx->data.intfloor = ft_edit_color(mlx, mlx->data.floor); 		// RGB 값으로 바꾸자!
-	mlx->data.intceiling = ft_edit_color(mlx, mlx->data.ceiling);	// RGB 값으로 바꾸자!
+	mlx->data.intfloor = ft_edit_color(mlx, mlx->data.floor);
+	mlx->data.intceiling = ft_edit_color(mlx, mlx->data.ceiling);
 }

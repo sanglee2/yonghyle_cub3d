@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:57:51 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 12:53:18 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 15:52:56 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_syntax_of_map(t_mlx *mlx, char *line)
 			printf("ft_syntax_of_map\n");
 			ft_free_mlx(mlx);
 		}
-		if (*line == '\n')		// Q.개행일 때, 0처리 왜 한 거지?
+		if (*line == '\n')
 			*line = 0;
 		line++;
 	}
@@ -45,7 +45,7 @@ void	ft_line_to_map(t_mlx *mlx)
 		temp = (char **)ft_calloc(mlx, height + 2, sizeof(char *));
 		height = -1;
 		while (mlx->map[++height])
-			temp[height] = mlx->map[height];				// arrlen으로 구한 0부터 height -1까지.
+			temp[height] = mlx->map[height];
 		free(mlx->map);
 		temp[height] = ft_linecpy(mlx, mlx->data.line);
 		temp[height + 1] = NULL;
@@ -65,22 +65,20 @@ int	ft_is_empty_line(char *line)
 		else
 			return (FALSE);
 	}
-	return (TRUE);										// 개행인 것도 TRUE를 반환하게 됨.
+	return (TRUE);
 }
 
-void	ft_get_map(t_mlx *mlx)							// 조금 더 깔끔히 바꿀 순 없을까?!
+void	ft_get_map(t_mlx *mlx)
 {
 	int		already_map;
-	// char	*line;
 
 	already_map = FALSE;
-
-	while (TRUE)										// 1번에 읽어오는게 더 편하니까 -- 일단 에러처리 하는 것으로 가자.
+	while (TRUE)
 	{
-		mlx->data.line = get_next_line(mlx->data.fd);  // 탈출하는 거 없어 보이는데 괜찮나 - 괜찮다.
+		mlx->data.line = get_next_line(mlx->data.fd);
 		if (mlx->data.line == NULL)
 			break;
-		if (ft_is_empty_line(mlx->data.line) == TRUE)			// 이걸 함수로 깔끔하게 만들 순 없을까?
+		if (ft_is_empty_line(mlx->data.line) == TRUE)
 		{
 			ft_free_line(mlx);
 			if (mlx->map)
@@ -90,10 +88,10 @@ void	ft_get_map(t_mlx *mlx)							// 조금 더 깔끔히 바꿀 순 없을까?!
 		if (mlx->data.line && already_map == TRUE)
 		{
 			printf("ft_get_map\n");
-			ft_free_mlx(mlx);						// 이 분기에서 빠져버리게 - 에러 문구 처리도 같이.
+			ft_free_mlx(mlx);
 		}
 		ft_syntax_of_map(mlx, mlx->data.line);
-		ft_line_to_map(mlx);						// 맵 옮기는 작업 잘할 것.
+		ft_line_to_map(mlx);
 		ft_free_line(mlx);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:02:56 by sanglee2          #+#    #+#             */
-/*   Updated: 2023/11/26 13:15:19 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 15:54:10 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	window_init(t_mlx *mlx)
 {
 	mlx->mlx = mlx_init();
 	mlx_do_key_autorepeaton(mlx->mlx); 						
-	// mlx->screenHeight = mlx->mapHeight * GRID_LEN;			
-	// mlx->screenWidth = mlx->mapWidth * GRID_LEN;
 	mlx->screenHeight = 720;			
 	mlx->screenWidth = 1080;
 	mlx->win = mlx_new_window(mlx->mlx, mlx->screenWidth,\

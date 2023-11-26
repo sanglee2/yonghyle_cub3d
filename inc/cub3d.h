@@ -42,7 +42,7 @@
 
 typedef struct s_data
 {
-	char		*av;			// 터미널에서 받은 argv 저장.
+	char		*av;			// 터미널0에서 받은 argv 저장.
 	int			fd;				// 맵파일 fd값 저장.
 	char		*line;			// 맵정보의 1줄.
 	char		**information;
@@ -155,7 +155,6 @@ typedef struct s_mlx
 /*		utils.c		*/
 int		ft_is_space(char c);
 size_t	ft_strlen(char *str);
-// char	*ft_str_to_mlx(t_mlx *mlx, char *str);
 char	*ft_strdup(t_mlx *mlx, char *str);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_is_num(char c);
@@ -236,8 +235,6 @@ void	ft_rotate(int keycode, t_ray *ray);
 /*		ft_draw_texture.c		*/
 void    ft_distance(t_mlx *mlx);
 void    ft_draw_cam_ray(t_mlx *mlx, double dir_x, double dir_y, int color);
-// void    ft_draw_wall(t_mlx *mlx, double x);
-void	ft_draw_wall(t_mlx *mlx, int x, int start, int end);
 void	ft_draw_ceiling(t_mlx *mlx, int x, int wallstart, int color);
 void	ft_draw_floor(t_mlx *mlx, int x, int wallend, int color);
 
@@ -253,7 +250,6 @@ void	ft_free_mlx(t_mlx *mlx);
 void	ft_free_info(t_data *data);
 
 /*		ft_raycast_algo.c		*/
-void	ft_get_plane_vector(t_mlx *mlx);
 void	ft_set_coordinate(t_ray *ray);
 void	ft_set_dda(t_ray *ray);
 void	ft_perform_dda(t_mlx *mlx, t_ray *ray);
@@ -262,7 +258,6 @@ void	ft_calcul_distance(t_ray *ray);
 /*		ft_texture.c			*/
 void	ft_get_wallX(t_ray *ray, t_mlx *mlx);
 void	ft_get_walltexture(t_ray *ray, t_mlx *mlx, int x);
-// void	ft_get_texture_color(t_ray *ray, t_img_data *img_data, int x, int y);
 void	user_mlx_pixel_put(t_img_data *img, int x, int y, int color);
 
 /*		ft_split.c				*/
