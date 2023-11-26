@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:59:20 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 17:41:25 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 20:10:13 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,24 @@ void	ft_str_to_int(t_mlx *mlx, char *str)
 {
 	while (*str != ',')
 	{
-		mlx->data.R = mlx->data.R * 10 + (*str - '0');
+		mlx->data.red = mlx->data.red * 10 + (*str - '0');
 		str++;
 	}
 	str++;
 	while (*str != ',')
 	{
-		mlx->data.G = mlx->data.G * 10 + (*str - '0');
+		mlx->data.green = mlx->data.green * 10 + (*str - '0');
 		str++;
 	}
 	str++;
 	while (*str != '\0')
 	{
-		mlx->data.B = mlx->data.B * 10 + (*str - '0');
+		mlx->data.blue = mlx->data.blue * 10 + (*str - '0');
 		str++;
 	}
-	if (mlx->data.R > 255 || mlx->data.R < 0 || \
-		mlx->data.G > 255 || mlx->data.G < 0 || \
-		mlx->data.B > 255 || mlx->data.B < 0)
+	if (mlx->data.red > 255 || mlx->data.red < 0 || \
+		mlx->data.green > 255 || mlx->data.green < 0 || \
+		mlx->data.blue > 255 || mlx->data.blue < 0)
 	{
 		printf("Wrong RGB value\n");
 		ft_free_mlx(mlx);
@@ -56,11 +56,11 @@ int	ft_edit_color(t_mlx *mlx, char *str)
 		ft_free_mlx(mlx);
 	}
 	ft_syntax_of_color(mlx, str);
-	mlx->data.R = 0;
-	mlx->data.G = 0;
-	mlx->data.B = 0;
+	mlx->data.red = 0;
+	mlx->data.green = 0;
+	mlx->data.blue = 0;
 	ft_str_to_int(mlx, str);
-	return ((mlx->data.R << 16) | (mlx->data.G << 8) | mlx->data.B);
+	return ((mlx->data.red << 16) | (mlx->data.green << 8) | mlx->data.blue);
 }
 
 void	ft_get_info(t_mlx *mlx)
@@ -70,7 +70,7 @@ void	ft_get_info(t_mlx *mlx)
 		mlx->data.line = get_next_line(mlx->data.fd);
 		if (mlx->data.line == NULL)
 			break ;
-		mlx->data.information = ft_split(mlx->data.line);
+		mlx->data.information = ft_split(mlx->data.line, 0, 0, 0);
 		ft_get_texture(mlx);
 		ft_free_info(&mlx->data);
 		ft_free_line(mlx);

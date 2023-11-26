@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:51:31 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 16:56:46 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 18:40:04 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,19 @@ void	ft_set_map(t_mlx *mlx)
 	int	i;
 
 	i = 0;
-	mlx->mapHeight = ft_arrlen(mlx->map);
-	mlx->mapWidth = ft_max_width(mlx->map);
-	if (mlx->mapHeight < 3 || mlx->mapWidth < 3)
+	mlx->map_height = ft_arrlen(mlx->map);
+	mlx->map_width = ft_max_width(mlx->map);
+	if (mlx->map_height < 3 || mlx->map_width < 3)
 	{
 		printf("invalid map size\n");
 		ft_free_mlx(mlx);
 	}			
-	mlx->tmp = (char **)ft_calloc(mlx, mlx->mapHeight + 1, sizeof(char *));
-	while (i < mlx->mapHeight)
+	mlx->tmp = (char **)ft_calloc(mlx, mlx->map_height + 1, sizeof(char *));
+	while (i < mlx->map_height)
 	{
-		mlx->tmp[i] = (char *)ft_calloc(mlx, mlx->mapWidth + 1, sizeof(char));
-		ft_memset(mlx->tmp[i], ' ', mlx->mapWidth);
-		mlx->tmp[i][mlx->mapWidth] = '\0';
+		mlx->tmp[i] = (char *)ft_calloc(mlx, mlx->map_width + 1, sizeof(char));
+		ft_memset(mlx->tmp[i], ' ', mlx->map_width);
+		mlx->tmp[i][mlx->map_width] = '\0';
 		ft_strcpy(mlx->tmp[i], mlx->map[i]);
 		i++;
 	}

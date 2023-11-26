@@ -6,7 +6,7 @@
 /*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:48:52 by jihokim2          #+#    #+#             */
-/*   Updated: 2023/11/26 16:58:18 by sanglee2         ###   ########.fr       */
+/*   Updated: 2023/11/26 18:26:28 by sanglee2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,31 +61,16 @@ int	ft_raycast(void *param)
 {
 	t_mlx	*mlx;
 	int		x;
-	int		wallheight;
-	int		wallstart;
-	int		wallend;
-	double	camera_x;
 
 	mlx = (t_mlx *)param;
-	mlx->img.img = mlx_new_image(mlx->mlx, mlx->screenWidth, mlx->screenHeight);
-	mlx->img.addr = mlx_get_data_addr(mlx->img.img, &mlx->img.bpp, &mlx->img.length, &mlx->img.endian);
+	mlx->img.img = \
+		mlx_new_image(mlx->mlx, mlx->screen_width, mlx->screen_height);
+	mlx->img.addr = mlx_get_data_addr(mlx->img.img, &mlx->img.bpp, \
+										&mlx->img.length, &mlx->img.endian);
 	x = 0;
-	while (x < mlx->screenWidth)
+	while (x < mlx->screen_width)
 	{
-		camera_x = (2 * x / (double)mlx->screenWidth) - 1;
-		mlx->ray.rdir_x = mlx->ray.dir_x + (mlx->ray.plane_x * camera_x);
-		mlx->ray.rdir_y = mlx->ray.dir_y + (mlx->ray.plane_y * camera_x);
-		ft_set_coordinate(&mlx->ray);
-		ft_set_dda(&mlx->ray);
-		ft_perform_dda(mlx, &mlx->ray);
-		ft_calcul_distance(&mlx->ray);
-		wallheight = (int)(mlx->screenHeight / mlx->ray.plane_hitDist);
-		wallstart = (int)((mlx->screenHeight / 2) - (wallheight / 2));
-		wallend = (int)((mlx->screenHeight / 2) + (wallheight / 2));
-		ft_draw_ceiling(mlx, x, wallstart, mlx->data.intceiling);
-		ft_draw_floor(mlx, x, wallend, mlx->data.intfloor);
-		ft_get_wall_x(&mlx->ray, mlx);
-		ft_get_walltexture(&mlx->ray, mlx, x);
+		ft_draw_vertical_line(mlx, x);
 		x++;
 	}
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img.img, 0, 0);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sanglee2 <sanglee2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/26 20:06:43 by sanglee2          #+#    #+#             */
+/*   Updated: 2023/11/26 20:17:29 by sanglee2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -27,8 +39,8 @@
 # define ROT_RATIO 10
 
 /* texture에 필요한 거기 */
-# define TEXWIDTH		64	
-# define TEXHEIGHT		64	
+# define TEXWIDTH		64
+# define TEXHEIGHT		64
 
 /* texture에 필요한 방향 */
 # define NO			0
@@ -44,7 +56,7 @@ typedef struct s_color
 	int	element;
 	int	num_flag;
 	int	serial_comma;
-}  t_color;
+}	t_color;
 
 typedef struct s_data
 {
@@ -60,56 +72,41 @@ typedef struct s_data
 	char		*ceiling;
 	int			intfloor;		
 	int			intceiling;		
-	int			R;
-	int			G;
-	int			B;
-	int			d[4];			
+	int			red;
+	int			green;
+	int			blue;		
 	int			x;				
 	int			y;				
 }	t_data;
 
-
-typedef struct  s_ray			
+typedef struct s_ray
 {
 	double	dir_x;				
 	double	dir_y;
 	double	pos_x;				
 	double	pos_y;
 	double	plane_x;			
-	double 	plane_y;
+	double	plane_y;
 	double	rdir_x;				
 	double	rdir_y;
-	int		mapX;
-	int		mapY;				
-	double	varDistX;			
-	double	varDistY;
-	int		stepX;
-	int		stepY;
-	double	initDistX;
-	double	initDistY;
+	int		map_x;
+	int		map_y;
+	double	vardist_x;
+	double	vardist_y;
+	int		step_x;
+	int		step_y;
+	double	initdist_x;
+	double	initdist_y;
 	int		orthogonal;
-	double	plane_hitDist;
+	double	plane_hitdist;
 	int		tex_x;
-	int 	tex_y;
-	double	radius;
-	double	cam_plane_len;
+	int		tex_y;
 	int		wallheight;
 	int		wallstart;
 	int		wallend;
 	double	ratio;
 	double	texpos;
 }	t_ray;
-
-typedef struct	s_3d
-{
-	double	diagonal;
-	double	ray_x;
-	double	ray_y;
-	double	d;
-	double	ratio;
-	double	height;
-	double	bottom;
-}	t_3d;
 
 typedef struct s_img_data
 {
@@ -120,28 +117,25 @@ typedef struct s_img_data
 	int		endian;
 	int		width;
 	int		height;
-} t_img_data;
-
+}	t_img_data;
 
 typedef struct s_mlx
 {
-	void	*mlx;
+	void		*mlx;
 	t_img_data	img_data[4];
 	t_img_data	img;
-	t_data	data;
-	t_color color;
-	t_ray	ray;
-	t_3d	ddd;
-	int		linenum;
-	void	*win;
-	void	*image;
-	char	**map;
-	char	**tmp;
-	int		mapWidth;
-	int		mapHeight;
-	int		screenWidth;
-	int		screenHeight;
-	int		keycode;
+	t_data		data;
+	t_color		color;
+	t_ray		ray;
+	void		*win;
+	void		*image;
+	char		**map;
+	char		**tmp;
+	int			map_width;
+	int			map_height;
+	int			screen_width;
+	int			screen_height;
+	int			keycode;
 }	t_mlx;
 
 /*		ft_draw_texture.c		*/
@@ -172,7 +166,7 @@ void	ft_get_info(t_mlx *mlx);
 /*		ft_get_map.c		*/
 void	ft_syntax_of_map(t_mlx *mlx, char *line);
 void	ft_line_to_map(t_mlx *mlx);
-int 	ft_is_empty_line(char *line);
+int		ft_is_empty_line(char *line);
 void	ft_get_map(t_mlx *mlx);
 
 /*		ft_img.c		*/
@@ -180,9 +174,8 @@ void	ft_init_texture(t_mlx *mlx);
 void	ft_load_texture(t_mlx *mlx);
 
 /*		ft_is_valid_map.c		*/
-void    ft_get_dir_vector(t_mlx *mlx, char c);
-void    ft_find_player(t_mlx *mlx, int player, int x, int y);
-void    ft_dfs(t_mlx *mlx, int x, int y, int k);
+void	ft_get_dir_vector(t_mlx *mlx, char c);
+void	ft_find_player(t_mlx *mlx, int player, int x, int y);
 void	ft_is_valid_map(t_mlx *mlx);
 
 /*		ft_key_press.c		*/
@@ -205,6 +198,7 @@ void	ft_set_coordinate(t_ray *ray);
 void	ft_set_dda(t_ray *ray);
 void	ft_perform_dda(t_mlx *mlx, t_ray *ray);
 void	ft_calcul_distance(t_ray *ray);
+void	ft_draw_vertical_line(t_mlx *mlx, int x);
 
 /*		ft_rotate.c				*/
 void	ft_key_r(t_ray *ray);
@@ -219,7 +213,18 @@ void	ft_set_map(t_mlx *mlx);
 /*		ft_split.c				*/
 int		is_space(char c);
 char	*ft_strncpy(char *s1, char *s2, int n);
-char	**ft_split(char *str);
+char	**ft_split(char *str, int i, int j, int k);
+
+/* 		ft_test_valid_map1.c		*/
+void	check_map_is_closed(char **tmp, t_mlx *mlx);
+void	check_is_surrouned(char **tmp, int y, int x, t_mlx *mlx);
+
+/* 		ft_test_valid_map2.c		*/
+int		is_empty_space(char c);
+void	check_north_is_empty(t_mlx *mlx, char **tmp, int y, int x);
+void	check_south_is_empty(t_mlx *mlx, char **tmp, int y, int x);
+void	check_east_is_empty(t_mlx *mlx, char **tmp, int y, int x);
+void	check_west_is_empty(t_mlx *mlx, char **tmp, int y, int x);
 
 /*		ft_texture.c			*/
 void	ft_get_wall_x(t_ray *ray, t_mlx *mlx);
@@ -242,5 +247,10 @@ void	*ft_calloc(t_mlx *mlx, size_t len, size_t size);
 
 /*		utils3.c		*/
 char	*ft_strcpy(char *str1, char *str2);
+
+/*		ft_test.c		*/
+void	check_map_is_closed(char **tmp, t_mlx *mlx);
+int		is_empty_space(char c);
+void	check_is_surrouned(char **tmp, int y, int x, t_mlx *mlx);
 
 #endif
